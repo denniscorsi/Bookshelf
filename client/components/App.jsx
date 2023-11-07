@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Book from './Book.jsx';
 
 const App = () => {
-  const [books, bookSetter] = useState([{}]);
+  const [books, setBooks] = useState([{}]);
 
   // useEffect(() => {
   //   console.log('HELLO!');
@@ -16,22 +16,27 @@ const App = () => {
   //         'http://books.google.com/books/content?id=0VWdBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
   //     },
   //   ];
-  //   bookSetter(newBooks);
+  //   setBooks(newBooks);
   //   console.log('Books:', books);
   // }, []);
 
-  // useEffect(() => {
-  //   fetch('/books')
-  //     .then((res) => {
-  //       //console.log('response:', res);
-  //       return res.json();
-  //     })
-  //     .then((bookArr) => {
-  //       bookSetter[bookArr];
-  //       //console.log('Books 1:', books);
-  //     })
-  //     .catch(console.log);
-  // }, []);
+  console.log('Start of App Component...');
+  console.log('books:', books);
+
+  useEffect(() => {
+    console.log('ENTERED');
+    fetch('/books')
+      .then((res) => {
+        //console.log('response:', res);
+        return res.json();
+      })
+      .then((bookArr) => {
+        console.log('bookArr:', bookArr);
+        setBooks(bookArr);
+        console.log('Books 1:', books);
+      })
+      .catch(console.log('Error!!'));
+  }, []);
 
   return (
     <>
