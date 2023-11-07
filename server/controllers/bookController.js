@@ -6,6 +6,8 @@ const bookController = {};
 bookController.findBook = (req, res, next) => {
   const { title } = req.body;
 
+  //console.log('REQUEST', req);
+
   fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
     .then((res) => res.json())
     .then((bookData) => {

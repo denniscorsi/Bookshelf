@@ -1,49 +1,28 @@
 //import React from 'react';
 import React, { useState, useEffect } from 'react';
 import Book from './Book.jsx';
+import Search from './Search.jsx';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
-
-  // useEffect(() => {
-  //   console.log('HELLO!');
-  //   const newBooks = [
-  //     {
-  //       title: 'title',
-  //       author: 'author',
-  //       description: 'descriptions',
-  //       coverImg:
-  //         'http://books.google.com/books/content?id=0VWdBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-  //     },
-  //   ];
-  //   setBooks(newBooks);
-  //   console.log('Books:', books);
-  // }, []);
-
-  console.log('Start of App Component...');
-  console.log('books:', books);
+  const [hasNewBook, setHasNewbook] = useState(false);
 
   useEffect(() => {
-    console.log('ENTERED');
     fetch('/books')
-      .then((res) => {
-        //console.log('response:', res);
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((bookArr) => {
-        console.log('bookArr:', bookArr);
         setBooks(bookArr);
-        console.log('Books 1:', books);
       })
-      .catch(console.log('Error!!'));
-  }, []);
+      .catch();
+  }, [hasNewBook]);
 
   return (
     <>
-      <h1>App Component</h1>
+      <Search setHasNewbook={setHasNewbook} />
       {books.map((book) => {
         return (
           <Book
+            key={book.title + Math.random()}
             title={book.title}
             author={book.author}
             description={book.description}
