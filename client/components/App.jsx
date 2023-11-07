@@ -1,18 +1,24 @@
-import React from 'react';
-//import React, { useState, useEffect } from 'react';
+//import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Book from './Book.jsx';
 
 const App = () => {
-  const books = [
-    {
-      title: 'title',
-      author: 'author',
-      description: 'descriptions',
-      coverImg:
-        'http://books.google.com/books/content?id=0VWdBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
-    },
-  ];
-  // const [books, bookSetter] = useState([]);
+  const [books, bookSetter] = useState([{}]);
+
+  // useEffect(() => {
+  //   console.log('HELLO!');
+  //   const newBooks = [
+  //     {
+  //       title: 'title',
+  //       author: 'author',
+  //       description: 'descriptions',
+  //       coverImg:
+  //         'http://books.google.com/books/content?id=0VWdBAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api',
+  //     },
+  //   ];
+  //   bookSetter(newBooks);
+  //   console.log('Books:', books);
+  // }, []);
 
   // useEffect(() => {
   //   fetch('/books')
