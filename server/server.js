@@ -19,9 +19,12 @@ app.get('/', (req, res) => {
 app.post(
   '/books',
   bookController.findBook,
+  bookController.unpackBookData,
   bookController.addBook,
-  bookController.buildBookComponent,
-  (res, req) => {}
+  //bookController.buildBookComponent,
+  (req, res) => {
+    res.status(200).json(res.locals.newBook);
+  }
 );
 
 app.use('/build', express.static(path.join(__dirname, '../build')));
