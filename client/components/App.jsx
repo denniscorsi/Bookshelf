@@ -41,12 +41,16 @@ const App = () => {
   return (
     <>
       <h1>App Component</h1>
-      <Book
-        title={books[0].title}
-        author={books[0].author}
-        description={books[0].description}
-        coverImg={books[0].coverImg}
-      />
+      {books.map((book) => {
+        return (
+          <Book
+            title={book.title}
+            author={book.author}
+            description={book.description}
+            coverImg={book.coverImg}
+          />
+        );
+      })}
     </>
   );
 };
