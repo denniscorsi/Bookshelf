@@ -1,4 +1,5 @@
 const Book = require('../models/bookModel');
+const OpenAI = require('openai');
 
 const bookController = {};
 
@@ -17,6 +18,7 @@ bookController.findBook = (req, res, next) => {
     .catch(console.log);
 };
 
+// pulls out relevant data from google's api response
 bookController.unpackBookData = (req, res, next) => {
   const bookData = res.locals.bookData;
   const books = bookData['items'];
@@ -34,7 +36,7 @@ bookController.unpackBookData = (req, res, next) => {
   return next();
 };
 
-//adds book to mongoDB
+// adds book to mongoDB
 bookController.addBook = (req, res, next) => {
   const { title, author, description, coverImg } = res.locals.newBook;
 
@@ -46,7 +48,7 @@ bookController.addBook = (req, res, next) => {
     .catch(next);
 };
 
-//load all books from mongoDB
+// load all books from mongoDB
 bookController.loadBooks = (req, res, next) => {
   Book.find({}).then((books) => {
     res.locals.books = books;
@@ -55,13 +57,65 @@ bookController.loadBooks = (req, res, next) => {
   });
 };
 
-//deletes a book from the database
+// deletes a book from the database
 bookController.deleteBook = (req, res, next) => {
   const { title } = req.body;
   Book.deleteOne({ title }).then(console.log);
   return next();
 };
 
-bookController.buildBookComponent = (req, res, next) => {};
+// gets a recommendation from chatGPT
+bookController.findRec = async (req, res, next) => {
+  const { title } = req.body;
+
+  const openai = new OpenAI({
+    apiKey: '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', //make this a secret env variable
+  });
+
+  const GPTresponse = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a helpful librarian. ',
+      },
+      {
+        role: 'user',
+        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with the name of the book. Respond with less than 60 words.`,
+      },
+    ],
+    temperature: 1,
+    max_tokens: 80,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+
+  res.locals.GPTresponse = GPTresponse;
+  return next();
+};
+
+bookController.unpackRec = (req, res, next) => {
+  const { GPTresponse } = res.locals;
+
+  // this is the actual text response
+  const GPTbody = GPTresponse.choices[0].message.content;
+  console.log('RESPONSE: ', GPTbody);
+  res.locals.fullRec = GPTbody;
+
+  // this finds the word "by" and assumes the title is everything before that
+  // ChatGPT was asked to repond with the title of the book first, so we know that is coming first
+  let title = '';
+  for (let i = 0; i < 100; i++) {
+    if (GPTbody[i] === 'b' && GPTbody[i + 1] === 'y') {
+      title = GPTbody.slice(0, i - 1);
+      break;
+    }
+  }
+  console.log('TITLE:', title);
+
+  res.locals.title = title;
+  next();
+};
 
 module.exports = bookController;

@@ -1,6 +1,7 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 const Search = ({ setHasNewbook }) => {
   const search = () => {
@@ -18,6 +19,7 @@ const Search = ({ setHasNewbook }) => {
 
   return (
     <>
+      <Typography>Add Book to Shelf</Typography>
       <TextField id='searchField' label='Book Title' variant='outlined' />
       <Button variant='contained' onClick={search}>
         Search

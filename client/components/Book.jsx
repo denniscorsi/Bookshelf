@@ -45,7 +45,7 @@ const Book = (props) => {
   };
 
   return (
-    <Paper elevation={7}>
+    <Paper elevation={10}>
       <Box
         padding={1}
         display='flex'
