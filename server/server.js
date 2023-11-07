@@ -1,7 +1,11 @@
 const express = require('express');
+const { default: mongoose } = require('mongoose');
 const path = require('path');
 
 const app = express();
+
+const mongoURI = 'mongodb://localhost/bookapp';
+mongoose.connect(mongoURI);
 
 app.get('/', (req, res) => {
   const index = path.join(__dirname, '../index.html');
