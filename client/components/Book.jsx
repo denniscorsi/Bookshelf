@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import { Box } from '@mui/system';
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -45,45 +46,55 @@ const Book = (props) => {
 
   return (
     <Paper elevation={7}>
-      <Typography>{props.title}</Typography>
-      <Typography>{props.author}</Typography>
-      <img src={props.coverImg} />
-      <Typography>{props.description}</Typography>
-      <Button variant='outlined' onClick={bookActions}>
-        Actions
-      </Button>
-      <Dialog onClose={handleClose} open={actionsOpen}>
-        <DialogTitle>Book Actions</DialogTitle>
-        <List>
-          <ListItem>
-            <ListItemButton
-              onClick={() => {
-                handleActionClick('favorite');
-              }}
-            >
-              Favorite
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton
-              onClick={() => {
-                handleActionClick('recommend');
-              }}
-            >
-              Find Similar
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton
-              onClick={() => {
-                handleActionClick('remove');
-              }}
-            >
-              Remove
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Dialog>
+      <Box
+        padding={1}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        sx={{
+          bgcolor: '#e9c6ad',
+        }}
+      >
+        <Typography variant='h6'>{props.title}</Typography>
+        <Typography fontStyle='italic'>{props.author}</Typography>
+        <img src={props.coverImg} />
+        <Typography variant='body2'>{props.description}</Typography>
+        <Button variant='outlined' onClick={bookActions}>
+          Actions
+        </Button>
+        <Dialog onClose={handleClose} open={actionsOpen}>
+          <DialogTitle>Book Actions</DialogTitle>
+          <List>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  handleActionClick('favorite');
+                }}
+              >
+                Favorite
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  handleActionClick('recommend');
+                }}
+              >
+                Find Similar
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  handleActionClick('remove');
+                }}
+              >
+                Remove
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Dialog>
+      </Box>
     </Paper>
   );
 };
