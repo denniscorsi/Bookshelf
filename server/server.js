@@ -32,6 +32,10 @@ app.post(
   }
 );
 
+app.delete('/books', bookController.deleteBook, (req, res) => {
+  res.status(200).end();
+});
+
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
 app.listen(3000, () => console.log('Server listening on 3000'));

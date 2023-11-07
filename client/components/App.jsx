@@ -1,7 +1,7 @@
 //import React from 'react';
 import React, { useState, useEffect } from 'react';
-import Book from './Book.jsx';
 import Search from './Search.jsx';
+import Bookshelf from './Bookshelf.jsx';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
@@ -19,17 +19,7 @@ const App = () => {
   return (
     <>
       <Search setHasNewbook={setHasNewbook} />
-      {books.map((book) => {
-        return (
-          <Book
-            key={book.title + Math.random()}
-            title={book.title}
-            author={book.author}
-            description={book.description}
-            coverImg={book.coverImg}
-          />
-        );
-      })}
+      <Bookshelf books={books} />
     </>
   );
 };

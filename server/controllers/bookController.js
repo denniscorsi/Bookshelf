@@ -55,6 +55,13 @@ bookController.loadBooks = (req, res, next) => {
   });
 };
 
+//deletes a book from the database
+bookController.deleteBook = (req, res, next) => {
+  const { title } = req.body;
+  Book.deleteOne({ title }).then(console.log);
+  return next();
+};
+
 bookController.buildBookComponent = (req, res, next) => {};
 
 module.exports = bookController;
