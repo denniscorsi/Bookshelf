@@ -10,9 +10,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [title, setTitle] = useState(null);
 
-  const bookActions = () => {
-    console.log('book actions');
+  const bookActions = (e) => {
+    const selected = e.target.parentElement.firstChild.innerText;
+    setTitle(selected);
     setActionsOpen(true);
   };
 
@@ -24,7 +26,13 @@ const Book = (props) => {
   const handleActionClick = (action) => {
     switch (action) {
       case 'remove':
-        console.log('WOO');
+        fetch('/books', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title }),
+        });
         break;
       case 'favorite':
         break;
