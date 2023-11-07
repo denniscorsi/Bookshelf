@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -6,21 +6,33 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 
 const Book = (props) => {
+  const [actionsOpen, setActionsOpen] = useState(false);
+
   const bookActions = () => {
     console.log('book actions');
+    setActionsOpen(true);
   };
 
   const handleClose = () => {
     console.log('closed dialog');
+    setActionsOpen(false);
   };
 
   const handleActionClick = (action) => {
+    switch (action) {
+      case 'remove':
+        console.log('WOO');
+        break;
+      case 'favorite':
+        break;
+      case 'recommend':
+        break;
+    }
     console.log(action);
+    setActionsOpen(false);
   };
 
   return (
@@ -32,7 +44,7 @@ const Book = (props) => {
       <Button variant='outlined' onClick={bookActions}>
         Actions
       </Button>
-      <Dialog onClose={handleClose} open={true}>
+      <Dialog onClose={handleClose} open={actionsOpen}>
         <DialogTitle>Book Actions</DialogTitle>
         <List>
           <ListItem>
