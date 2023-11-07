@@ -15,6 +15,11 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(index);
 });
 
+//get request to books will load all the books in the database into an object and return that object
+app.get('/books', bookController.loadBooks, (req, res) => {
+  res.status(200).json(res.locals.books);
+});
+
 //send post request to books endpoint with the title in the body to create a new book in the database
 app.post(
   '/books',

@@ -1,9 +1,11 @@
+const Book = require('../models/bookModel');
+
 const bookController = {};
 
+// get book data from Google api
 bookController.findBook = (req, res, next) => {
   const { title } = req.body;
 
-  //get book data from Google api
   fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
     .then((res) => res.json())
     .then((bookData) => {
@@ -21,14 +23,30 @@ bookController.unpackBookData = (req, res, next) => {
   const title = bookInfo.title;
   const author = bookInfo.authors[0];
   const description = bookInfo.description;
-  const imgsrc = bookInfo.imageLinks.thumbnail;
-  const newBook = { title, author, description, imgsrc };
+  const coverImg = bookInfo.imageLinks.thumbnail;
+  const newBook = { title, author, description, coverImg };
   res.locals.newBook = newBook;
   return next();
 };
 
+//adds book to mongoDB
 bookController.addBook = (req, res, next) => {
-  
+  const { title, author, description, coverImg } = res.locals.newBook;
+
+  Book.create({ title, author, description, coverImg })
+    .then((result) => {
+      console.log('Added book to database:', result);
+      return next();
+    })
+    .catch(next);
+};
+
+//load all books from mongoDB
+bookController.loadBooks = (req, res, next) => {
+  Book.find({}).then((books) => {
+    res.locals.books = books;
+    return next();
+  });
 };
 
 bookController.buildBookComponent = (req, res, next) => {};
