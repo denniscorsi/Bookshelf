@@ -22,7 +22,10 @@ bookController.unpackBookData = (req, res, next) => {
   const bookInfo = book.volumeInfo;
   const title = bookInfo.title;
   const author = bookInfo.authors[0];
-  const description = bookInfo.description;
+  let description = bookInfo.description;
+  //shorten description
+  if (description.length > 400) description = description.slice(0, 400) + '...';
+
   const coverImg = bookInfo.imageLinks.thumbnail;
   const newBook = { title, author, description, coverImg };
   res.locals.newBook = newBook;
