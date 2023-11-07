@@ -45,6 +45,7 @@ bookController.addBook = (req, res, next) => {
 bookController.loadBooks = (req, res, next) => {
   Book.find({}).then((books) => {
     res.locals.books = books;
+    console.log('Loaded books in middleware');
     return next();
   });
 };

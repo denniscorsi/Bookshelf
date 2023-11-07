@@ -40,5 +40,8 @@ module.exports = {
     static: {
       publicPath: '/build',
     },
+    proxy: {
+      '/books': 'http://localhost:3000',
+    },
   },
 };
