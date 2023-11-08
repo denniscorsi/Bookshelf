@@ -65,6 +65,7 @@ bookController.deleteBook = (req, res, next) => {
   return next();
 };
 
+// adds a note to a book
 bookController.addNote = (req, res, next) => {
   const { title, note } = req.body;
   Book.findOneAndUpdate({ title }, { note }, { returnDocument: 'after' }).then(
@@ -93,11 +94,11 @@ bookController.findRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with the name of the book. Respond with less than 60 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with the name of the book. Also explain why I'd like this book based on enjoying ${title} Respond with less than 70 words.`,
       },
     ],
     temperature: 1,
-    max_tokens: 80,
+    max_tokens: 100,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
