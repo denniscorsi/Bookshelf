@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import { Box } from '@mui/system';
-import CircularProgress from '@mui/material/CircularProgress';
 import ActionsDialog from './ActionsDialog.jsx';
 import GptDialog from './GptDialog.jsx';
+import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 // import Fade from '@mui/material/Fade';
 
@@ -23,10 +19,6 @@ const Book = (props) => {
   const [searchingGpt, setSearchingGpt] = useState(null);
 
   const { setHasDeletedBook, hasDeletedBook } = props;
-
-  // useEffect(() => {
-  //   if (fullRec) setSearchingGpt('none');
-  // }, [fullRec]);
 
   const bookActions = (e) => {
     const selected = e.target.parentElement.firstChild.innerText;
@@ -102,6 +94,16 @@ const Book = (props) => {
         <Typography variant='h6'>{props.title}</Typography>
         <Typography fontStyle='italic'>{props.author}</Typography>
         <img src={props.coverImg} />
+        <Tooltip
+          title={
+            <>
+              <Typography variant='subtitle2'>Notes:</Typography>
+              <Typography variant='caption'>{props.note}</Typography>
+            </>
+          }
+        >
+          <NotesRoundedIcon />
+        </Tooltip>
         <Typography variant='body2'>{props.description}</Typography>
         <Button variant='outlined' onClick={bookActions}>
           Actions

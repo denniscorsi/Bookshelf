@@ -15,6 +15,7 @@ const Bookshelf = ({ books, setHasDeletedBook, hasDeletedBook }) => {
                 author={book.author}
                 description={book.description}
                 coverImg={book.coverImg}
+                note={book.note}
                 setHasDeletedBook={setHasDeletedBook}
                 hasDeletedBook={hasDeletedBook}
               />
