@@ -15,6 +15,15 @@ const ActionsDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
         <ListItem>
           <ListItemButton
             onClick={() => {
+              handleActionClick('addNote');
+            }}
+          >
+            Add Note
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton
+            onClick={() => {
               handleActionClick('favorite');
             }}
           >

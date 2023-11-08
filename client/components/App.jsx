@@ -7,6 +7,7 @@ const App = () => {
   const [books, setBooks] = useState([{}]);
   const [hasNewBook, setHasNewBook] = useState(false);
   const [hasDeletedBook, setHasDeletedBook] = useState(false);
+  const [numNotes, setNumNotes] = useState(1);
 
   console.log('rendering App');
   useEffect(() => {
@@ -31,6 +32,8 @@ const App = () => {
         books={books}
         setHasDeletedBook={setHasDeletedBook}
         hasDeletedBook={hasDeletedBook}
+        numNotes={numNotes}
+        setNumNotes={setNumNotes}
       />
     </>
   );

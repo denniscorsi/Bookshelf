@@ -34,6 +34,21 @@ const Book = (props) => {
 
   const handleActionClick = (action) => {
     switch (action) {
+      case 'addNote':
+        const note = 'added note';
+        //send post request to server on books/notes route
+        //body will have title of book and the note
+        fetch('/books/notes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, note }),
+        }).then(() => {
+          console.log('done');
+          props.setNumNotes(props.numNotes);
+        });
+        break;
       case 'remove':
         fetch('/books', {
           method: 'DELETE',

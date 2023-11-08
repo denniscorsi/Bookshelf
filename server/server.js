@@ -46,6 +46,11 @@ app.post(
   }
 );
 
+app.post('/books/notes', bookController.addNote, (req, res) => {
+  console.log('Book note added:', res.locals.updatedBook);
+  res.status(200).end();
+});
+
 app.delete('/books', bookController.deleteBook, (req, res) => {
   res.status(200).end();
 });

@@ -65,6 +65,16 @@ bookController.deleteBook = (req, res, next) => {
   return next();
 };
 
+bookController.addNote = (req, res, next) => {
+  const { title, note } = req.body;
+  Book.findOneAndUpdate({ title }, { note }, { returnDocument: 'after' }).then(
+    (updatedBook) => {
+      res.locals.updatedBook = updatedBook;
+      return next();
+    }
+  );
+};
+
 // gets a recommendation from chatGPT
 bookController.findRec = async (req, res, next) => {
   console.log('CHATGPT REQUEST!');
