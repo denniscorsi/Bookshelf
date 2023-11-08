@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
 import ActionsDialog from './ActionsDialog.jsx';
 import GptDialog from './GptDialog.jsx';
+import NoteDialog from './NoteDialog.jsx';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
@@ -13,6 +14,7 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
   const [gptOpen, setGptOpen] = useState(false);
+  const [noteOpen, setNoteOpen] = useState(false);
   const [title, setTitle] = useState(null);
   const [newTitle, setNewTitle] = useState('??');
   const [fullRec, setfullRec] = useState(null);
@@ -30,12 +32,15 @@ const Book = (props) => {
     console.log('closed dialog');
     setActionsOpen(false);
     setGptOpen(false);
+    setNoteOpen(false);
   };
 
-  const handleActionClick = (action) => {
+  const handleActionClick = (action, note) => {
     switch (action) {
       case 'addNote':
-        const note = 'added note';
+        setNoteOpen(true);
+        break;
+      case 'submitNote':
         //send post request to server on books/notes route
         //body will have title of book and the note
         fetch('/books/notes', {
@@ -46,6 +51,7 @@ const Book = (props) => {
           body: JSON.stringify({ title, note }),
         }).then(() => {
           console.log('done');
+          setNoteOpen(false);
           props.setNumNotes(props.numNotes);
         });
         break;
@@ -126,6 +132,11 @@ const Book = (props) => {
         <ActionsDialog
           handleClose={handleClose}
           actionsOpen={actionsOpen}
+          handleActionClick={handleActionClick}
+        />
+        <NoteDialog
+          noteOpen={noteOpen}
+          handleClose={handleClose}
           handleActionClick={handleActionClick}
         />
         <GptDialog
