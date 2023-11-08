@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(index);
 });
 
+//post request for books/gpt get a book recommendation from chatGPT
 app.post(
   '/books/gpt',
   bookController.findRec,

@@ -9,6 +9,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Box } from '@mui/system';
 import CircularProgress from '@mui/material/CircularProgress';
+import ActionsDialog from './ActionsDialog.jsx';
+import GptDialog from './GptDialog.jsx';
 
 // import Fade from '@mui/material/Fade';
 
@@ -62,18 +64,24 @@ const Book = (props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ title }),
-        }).then((recData) => {
-          const { title, fullRec } = recData;
-          console.log('DATA FROM RESPONSE'); // THESE ARE COMING IN AS UNDEFINED !!START HERE!!
-          console.log('Recommended Title:', title);
-          console.log('Full Rec:', fullRec);
-          //stop loading component
-          setSearchingGpt('none'); //THIS IS WORKING
-          //display book data in dialog
-          setNewTitle(title);
-          setfullRec(fullRec);
-          //do a get request to load that book to the page
-        });
+        })
+          .then((response) => {
+            console.log('recieved response:', response);
+            return response.json();
+          })
+          .then((recData) => {
+            console.log('recData post-parse: ', recData);
+            const { title, fullRec } = recData;
+            console.log('DATA FROM RESPONSE'); // THESE ARE COMING IN AS UNDEFINED !!START HERE!!
+            console.log('Recommended Title:', title);
+            console.log('Full Rec:', fullRec);
+            //stop loading component
+            setSearchingGpt('none'); //THIS IS WORKING
+            //display book data in dialog
+            setNewTitle(title);
+            setfullRec(fullRec);
+            //do a get request to load that book to the page
+          });
         break;
     }
     console.log(action);
@@ -98,51 +106,18 @@ const Book = (props) => {
         <Button variant='outlined' onClick={bookActions}>
           Actions
         </Button>
-        <Dialog onClose={handleClose} open={actionsOpen}>
-          <DialogTitle>Book Actions</DialogTitle>
-          <List>
-            <ListItem>
-              <ListItemButton
-                onClick={() => {
-                  handleActionClick('favorite');
-                }}
-              >
-                Favorite
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton
-                onClick={() => {
-                  handleActionClick('recommend');
-                }}
-              >
-                Find Similar
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <ListItemButton
-                onClick={() => {
-                  handleActionClick('remove');
-                }}
-              >
-                Remove
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Dialog>
-        <Dialog onClose={handleClose} open={gptOpen}>
-          <Box padding={3} textAlign='center'>
-            <Typography variant='h6'>
-              Librarian Brainstorming Recommendation
-            </Typography>
-            <Typography variant='h6'>Personalized For You!</Typography>
-            <Box display={searchingGpt}>
-              <CircularProgress />
-            </Box>
-            <Typography>We recommend {newTitle}</Typography>
-            <Typography>{fullRec}</Typography>
-          </Box>
-        </Dialog>
+        <ActionsDialog
+          handleClose={handleClose}
+          actionsOpen={actionsOpen}
+          handleActionClick={handleActionClick}
+        />
+        <GptDialog
+          handleClose={handleClose}
+          gptOpen={gptOpen}
+          searchingGpt={searchingGpt}
+          newTitle={newTitle}
+          fullRec={fullRec}
+        />
       </Box>
     </Paper>
   );
