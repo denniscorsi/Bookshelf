@@ -1,7 +1,8 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 const Search = ({ setHasNewBook, hasNewBook }) => {
   const search = () => {
@@ -19,13 +20,36 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
     });
   };
 
+  //adds styling to textfield
+  const StyledSearch = styled(TextField)({
+    '& label.Mui-focused': {
+      color: 'red',
+    },
+  });
+
   return (
     <>
-      <Typography>Add Book to Shelf</Typography>
-      <TextField id='searchField' label='Book Title' variant='outlined' />
-      <Button variant='contained' onClick={search}>
-        Search
-      </Button>
+      <Box
+        display='flex'
+        justifyContent='space-around'
+        alignItems='center'
+        paddingY={3}
+        width='50%'
+        margin='0px auto'
+      >
+        {/* {<Typography>Add Book to Shelf</Typography>} */}
+        <StyledSearch
+          sx={{
+            input: { color: 'orange', borderColor: 'White' },
+          }}
+          id='searchField'
+          label='Book Title'
+          variant='outlined'
+        />
+        <Button variant='contained' onClick={search}>
+          Add to Shelf
+        </Button>
+      </Box>
     </>
   );
 };

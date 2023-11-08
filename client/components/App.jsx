@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Search from './Search.jsx';
 import Bookshelf from './Bookshelf.jsx';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+//can remove theme providor if I don't end up using it
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
