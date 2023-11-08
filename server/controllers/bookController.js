@@ -76,6 +76,14 @@ bookController.addNote = (req, res, next) => {
   );
 };
 
+bookController.updateRating = (req, res, next) => {
+  const { title, rating } = req.body;
+  Book.findOneAndUpdate({ title }, { rating }).then((result) => {
+    console.log('UPDATED RATING', result);
+    return next();
+  });
+};
+
 // gets a recommendation from chatGPT
 bookController.findRec = async (req, res, next) => {
   console.log('STOPPING REQUEST');

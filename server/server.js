@@ -29,6 +29,10 @@ app.post(
   }
 );
 
+app.post('/books/ratings', bookController.updateRating, (req, res) => {
+  res.status(200).end();
+});
+
 //get request to books will load all the books in the database into an object and return that object
 app.get('/books', bookController.loadBooks, (req, res) => {
   res.status(200).json(res.locals.books);

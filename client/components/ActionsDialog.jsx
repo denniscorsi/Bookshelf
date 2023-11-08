@@ -22,7 +22,7 @@ const ActionsDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
             Add Note
           </ListItemButton>
         </ListItem>
-        <ListItem>
+        {/* {<ListItem>
           <ListItemButton
             onClick={() => {
               handleActionClick('favorite');
@@ -30,7 +30,7 @@ const ActionsDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
           >
             Favorite
           </ListItemButton>
-        </ListItem>
+        </ListItem>} */}
         <ListItem>
           <ListItemButton onClick={() => handleActionClick('recommend')}>
             Find Similar

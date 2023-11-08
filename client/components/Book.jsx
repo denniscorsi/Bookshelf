@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Typography, Rating } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
 import ActionsDialog from './ActionsDialog.jsx';
@@ -8,8 +8,6 @@ import GptDialog from './GptDialog.jsx';
 import NoteDialog from './NoteDialog.jsx';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-
-// import Fade from '@mui/material/Fade';
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -23,12 +21,14 @@ const Book = (props) => {
   const { setHasDeletedBook, hasDeletedBook, setHasNewBook, hasNewBook } =
     props;
 
+  // when the actions menu is opened, this stores the title of the connect book into title and opens the actions dialog
   const bookActions = (e) => {
     const selected = e.target.parentElement.firstChild.innerText;
     setTitle(selected);
     setActionsOpen(true);
   };
 
+  //closes any opened dialog boxes
   const handleClose = () => {
     console.log('closed dialog');
     setActionsOpen(false);
@@ -36,6 +36,7 @@ const Book = (props) => {
     setNoteOpen(false);
   };
 
+  // Executes an action based on the button clicked in the action menu
   const handleActionClick = (action, note) => {
     switch (action) {
       case 'addNote':
@@ -107,6 +108,20 @@ const Book = (props) => {
     setActionsOpen(false);
   };
 
+  //will update rating for book in database
+  const setRating = (event, rating) => {
+    console.log(event.target);
+    const title = event.target.parentElement.parentElement.firstChild.innerText;
+    console.log(title, rating);
+    fetch('/books/ratings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title, rating }),
+    }); 
+  };
+
   return (
     <Paper elevation={10}>
       <Box
@@ -121,6 +136,12 @@ const Book = (props) => {
         <Typography variant='h6'>{props.title}</Typography>
         <Typography fontStyle='italic'>{props.author}</Typography>
         <img src={props.coverImg} />
+        <Rating
+          value={props.rating}
+          onChange={(event, newRating) => {
+            setRating(event, newRating);
+          }}
+        />
         <Tooltip
           title={
             <>
@@ -158,7 +179,5 @@ const Book = (props) => {
     </Paper>
   );
 };
-
-//Once book rec arrives, have a button that allows you to add it to your bookshelf
 
 export default Book;

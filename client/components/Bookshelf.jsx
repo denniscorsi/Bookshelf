@@ -24,6 +24,7 @@ const Bookshelf = ({
                 description={book.description}
                 coverImg={book.coverImg}
                 note={book.note}
+                rating={book.rating}
                 setHasDeletedBook={setHasDeletedBook}
                 hasDeletedBook={hasDeletedBook}
                 setHasNewBook={setHasNewBook}

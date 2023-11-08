@@ -8,6 +8,7 @@ const bookSchema = new Schema({
   coverImg: String,
   description: String,
   note: String,
+  rating: { type: Number, default: 0 },
 });
 
 Book = mongoose.model('Book', bookSchema);
