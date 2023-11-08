@@ -97,6 +97,7 @@ bookController.findRec = async (req, res, next) => {
   return next();
 };
 
+// pull the title and message out of the chatGPT response
 bookController.unpackRec = (req, res, next) => {
   const { GPTresponse } = res.locals;
 

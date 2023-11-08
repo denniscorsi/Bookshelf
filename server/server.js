@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(index);
 });
 
-app.get(
+app.post(
   '/books/gpt',
   bookController.findRec,
   bookController.unpackRec,

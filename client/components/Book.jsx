@@ -8,13 +8,23 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Box } from '@mui/system';
+import CircularProgress from '@mui/material/CircularProgress';
+
 // import Fade from '@mui/material/Fade';
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
+  const [gptOpen, setGptOpen] = useState(false);
   const [title, setTitle] = useState(null);
+  const [newTitle, setNewTitle] = useState('??');
+  const [fullRec, setfullRec] = useState(null);
+  const [searchingGpt, setSearchingGpt] = useState(null);
 
   const { setHasDeletedBook, hasDeletedBook } = props;
+
+  // useEffect(() => {
+  //   if (fullRec) setSearchingGpt('none');
+  // }, [fullRec]);
 
   const bookActions = (e) => {
     const selected = e.target.parentElement.firstChild.innerText;
@@ -25,6 +35,7 @@ const Book = (props) => {
   const handleClose = () => {
     console.log('closed dialog');
     setActionsOpen(false);
+    setGptOpen(false);
   };
 
   const handleActionClick = (action) => {
@@ -43,10 +54,24 @@ const Book = (props) => {
       case 'favorite':
         break;
       case 'recommend':
-        //display a loading animation
-        fetch('/books/gpt').then((recData) => {
+        //display a loading animation screen
+        setGptOpen(true);
+        fetch('/books/gpt', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title }),
+        }).then((recData) => {
           const { title, fullRec } = recData;
+          console.log('DATA FROM RESPONSE'); // THESE ARE COMING IN AS UNDEFINED !!START HERE!!
+          console.log('Recommended Title:', title);
+          console.log('Full Rec:', fullRec);
+          //stop loading component
+          setSearchingGpt('none'); //THIS IS WORKING
           //display book data in dialog
+          setNewTitle(title);
+          setfullRec(fullRec);
           //do a get request to load that book to the page
         });
         break;
@@ -105,9 +130,24 @@ const Book = (props) => {
             </ListItem>
           </List>
         </Dialog>
+        <Dialog onClose={handleClose} open={gptOpen}>
+          <Box padding={3} textAlign='center'>
+            <Typography variant='h6'>
+              Librarian Brainstorming Recommendation
+            </Typography>
+            <Typography variant='h6'>Personalized For You!</Typography>
+            <Box display={searchingGpt}>
+              <CircularProgress />
+            </Box>
+            <Typography>We recommend {newTitle}</Typography>
+            <Typography>{fullRec}</Typography>
+          </Box>
+        </Dialog>
       </Box>
     </Paper>
   );
 };
+
+//Once book rec arrives, have a button that allows you to add it to your bookshelf
 
 export default Book;
