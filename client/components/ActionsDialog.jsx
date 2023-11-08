@@ -4,6 +4,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 //props needed: handleClose, actionsOpen, handleActionClick
 
@@ -31,21 +32,18 @@ const ActionsDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton
-            onClick={() => {
-              handleActionClick('recommend');
-            }}
-          >
+          <ListItemButton onClick={() => handleActionClick('recommend')}>
             Find Similar
           </ListItemButton>
         </ListItem>
         <ListItem>
-          <ListItemButton
-            onClick={() => {
-              handleActionClick('remove');
-            }}
-          >
+          <ListItemButton onClick={() => handleActionClick('remove')}>
             Remove
+          </ListItemButton>
+        </ListItem>
+        <ListItem>
+          <ListItemButton onClick={() => handleActionClick('amazon')}>
+            <ShoppingCartIcon></ShoppingCartIcon>
           </ListItemButton>
         </ListItem>
       </List>

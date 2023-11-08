@@ -2,9 +2,7 @@ import React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/system';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Typography, Dialog } from '@mui/material';
-
-//props needed: handleClose, gptOpen, searchingGpt, newTitle, fullRec
+import { Typography, Dialog, Button } from '@mui/material';
 
 const GptDialog = ({
   handleClose,
@@ -12,19 +10,38 @@ const GptDialog = ({
   searchingGpt,
   newTitle,
   fullRec,
+  hasNewBook,
+  setHasNewBook,
 }) => {
+  const addBook = (title) => {
+    fetch('/books', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title }),
+    }).then(() => {
+      setHasNewBook(!hasNewBook);
+    });
+  };
+
   return (
     <Dialog onClose={handleClose} open={gptOpen}>
       <Box padding={3} textAlign='center'>
-        <Typography variant='h6'>
-          Librarian Brainstorming Recommendation
-        </Typography>
-        <Typography variant='h6'>Personalized For You!</Typography>
         <Box display={searchingGpt}>
+          <Typography variant='h6'>
+            Librarian Brainstorming Recommendation
+          </Typography>
+          <Typography variant='h6'>Personalized For You!</Typography>
           <CircularProgress />
         </Box>
-        <Typography>We recommend {newTitle}</Typography>
-        <Typography>{fullRec}</Typography>
+        <Box spacing={2} display={searchingGpt === 'none' ? null : 'none'}>
+          <Typography variant='h5'>We recommend {newTitle}</Typography>
+          <Typography>{fullRec}</Typography>
+          <Button variant='contained' onClick={() => addBook(newTitle)}>
+            Add {newTitle} to Shelf
+          </Button>
+        </Box>
       </Box>
     </Dialog>
   );

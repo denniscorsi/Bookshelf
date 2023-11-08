@@ -20,7 +20,8 @@ const Book = (props) => {
   const [fullRec, setfullRec] = useState(null);
   const [searchingGpt, setSearchingGpt] = useState(null);
 
-  const { setHasDeletedBook, hasDeletedBook } = props;
+  const { setHasDeletedBook, hasDeletedBook, setHasNewBook, hasNewBook } =
+    props;
 
   const bookActions = (e) => {
     const selected = e.target.parentElement.firstChild.innerText;
@@ -96,6 +97,11 @@ const Book = (props) => {
             //do a get request to load that book to the page
           });
         break;
+      case 'amazon':
+        let titleCleaned = title.replaceAll(' ', '+');
+        const url = ' https://www.amazon.com/s?k=' + titleCleaned;
+        window.open(url, '_blank');
+        break;
     }
     console.log(action);
     setActionsOpen(false);
@@ -145,6 +151,8 @@ const Book = (props) => {
           searchingGpt={searchingGpt}
           newTitle={newTitle}
           fullRec={fullRec}
+          hasNewBook={hasNewBook}
+          setHasNewBook={setHasNewBook}
         />
       </Box>
     </Paper>

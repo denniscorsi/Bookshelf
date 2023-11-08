@@ -30,6 +30,8 @@ const App = () => {
       <Search setHasNewBook={setHasNewBook} hasNewBook={hasNewBook} />
       <Bookshelf
         books={books}
+        setHasNewBook={setHasNewBook}
+        hasNewBook={hasNewBook}
         setHasDeletedBook={setHasDeletedBook}
         hasDeletedBook={hasDeletedBook}
         numNotes={numNotes}

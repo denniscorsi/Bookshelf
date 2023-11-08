@@ -78,6 +78,8 @@ bookController.addNote = (req, res, next) => {
 
 // gets a recommendation from chatGPT
 bookController.findRec = async (req, res, next) => {
+  console.log('STOPPING REQUEST');
+  return next('not yet!');
   console.log('CHATGPT REQUEST!');
   const { title } = req.body;
 
@@ -94,11 +96,11 @@ bookController.findRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with the name of the book. Also explain why I'd like this book based on enjoying ${title} Respond with less than 70 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with the name of the book. Also explain why I'd like this book based on enjoying ${title} Respond with less than 65 words.`,
       },
     ],
     temperature: 1,
-    max_tokens: 100,
+    max_tokens: 120,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,

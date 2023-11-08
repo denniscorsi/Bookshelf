@@ -6,6 +6,8 @@ const Bookshelf = ({
   books,
   setHasDeletedBook,
   hasDeletedBook,
+  setHasNewBook,
+  hasNewBook,
   numNotes,
   setNumNotes,
 }) => {
@@ -24,6 +26,8 @@ const Bookshelf = ({
                 note={book.note}
                 setHasDeletedBook={setHasDeletedBook}
                 hasDeletedBook={hasDeletedBook}
+                setHasNewBook={setHasNewBook}
+                hasNewBook={hasNewBook}
                 numNotes={numNotes}
                 setNumNotes={setNumNotes}
               />
