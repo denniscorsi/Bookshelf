@@ -51,6 +51,7 @@ bookController.addBook = (req, res, next) => {
 // load all books from mongoDB
 bookController.loadBooks = (req, res, next) => {
   Book.find({}).then((books) => {
+    books.reverse();
     res.locals.books = books;
     console.log('Loaded books in middleware');
     return next();
@@ -66,6 +67,7 @@ bookController.deleteBook = (req, res, next) => {
 
 // gets a recommendation from chatGPT
 bookController.findRec = async (req, res, next) => {
+  console.log('CHATGPT REQUEST!');
   const { title } = req.body;
 
   const openai = new OpenAI({

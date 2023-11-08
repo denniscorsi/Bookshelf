@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 
-const Search = ({ setHasNewbook }) => {
+const Search = ({ setHasNewBook, hasNewBook }) => {
   const search = () => {
     const title = document.getElementById('searchField').value;
     console.log('Fetching', title);
@@ -13,8 +13,10 @@ const Search = ({ setHasNewbook }) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title }),
-    }).then((res) => console.log('Added book', title));
-    setHasNewbook(true);
+    }).then((res) => {
+      console.log('Added book', title);
+      setHasNewBook(!hasNewBook);
+    });
   };
 
   return (

@@ -5,21 +5,33 @@ import Bookshelf from './Bookshelf.jsx';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
-  const [hasNewBook, setHasNewbook] = useState(false);
+  const [hasNewBook, setHasNewBook] = useState(false);
+  const [hasDeletedBook, setHasDeletedBook] = useState(false);
 
+  console.log('rendering App');
   useEffect(() => {
+    console.log('Running useEffect');
     fetch('/books')
       .then((res) => res.json())
       .then((bookArr) => {
+        console.log('Got new books');
+        console.log(bookArr);
         setBooks(bookArr);
       })
       .catch();
-  }, [hasNewBook]);
+    return () => {
+      console.log('Ran cleanup function');
+    };
+  }, [hasNewBook, hasDeletedBook]);
 
   return (
     <>
-      <Search setHasNewbook={setHasNewbook} />
-      <Bookshelf books={books} />
+      <Search setHasNewBook={setHasNewBook} hasNewBook={hasNewBook} />
+      <Bookshelf
+        books={books}
+        setHasDeletedBook={setHasDeletedBook}
+        hasDeletedBook={hasDeletedBook}
+      />
     </>
   );
 };

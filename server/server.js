@@ -20,7 +20,11 @@ app.get(
   bookController.findRec,
   bookController.unpackRec,
   (req, res) => {
-    res.status(200).json();
+    const data = {
+      title: res.locals.title,
+      fullRec: res.locals.fullRec,
+    };
+    res.status(200).json(data);
   }
 );
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Book from './Book.jsx';
 import Grid from '@mui/material/Grid';
 
-const Bookshelf = ({ books }) => {
+const Bookshelf = ({ books, setHasDeletedBook, hasDeletedBook }) => {
   return (
     <>
       <Grid container spacing={2}>
@@ -15,6 +15,8 @@ const Bookshelf = ({ books }) => {
                 author={book.author}
                 description={book.description}
                 coverImg={book.coverImg}
+                setHasDeletedBook={setHasDeletedBook}
+                hasDeletedBook={hasDeletedBook}
               />
             </Grid>
           );

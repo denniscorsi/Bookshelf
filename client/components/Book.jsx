@@ -8,10 +8,13 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Box } from '@mui/system';
+// import Fade from '@mui/material/Fade';
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
   const [title, setTitle] = useState(null);
+
+  const { setHasDeletedBook, hasDeletedBook } = props;
 
   const bookActions = (e) => {
     const selected = e.target.parentElement.firstChild.innerText;
@@ -33,11 +36,19 @@ const Book = (props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ title }),
+        }).then(() => {
+          setHasDeletedBook(!hasDeletedBook);
         });
         break;
       case 'favorite':
         break;
       case 'recommend':
+        //display a loading animation
+        fetch('/books/gpt').then((recData) => {
+          const { title, fullRec } = recData;
+          //display book data in dialog
+          //do a get request to load that book to the page
+        });
         break;
     }
     console.log(action);
