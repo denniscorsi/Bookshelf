@@ -23,7 +23,21 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
   //adds styling to textfield
   const StyledSearch = styled(TextField)({
     '& label.Mui-focused': {
-      color: 'red',
+      color: 'orange',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+        color: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'orange',
+      },
+      '& input': {
+        '&::placeholder': {
+          color: 'white',
+        },
+      },
     },
   });
 
@@ -40,7 +54,11 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
         {/* {<Typography>Add Book to Shelf</Typography>} */}
         <StyledSearch
           sx={{
-            input: { color: 'orange', borderColor: 'White' },
+            input: {
+              color: 'orange',
+              borderColor: 'White',
+              '&::placeholder': { color: 'white' },
+            },
           }}
           id='searchField'
           label='Book Title'

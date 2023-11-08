@@ -141,7 +141,7 @@ const Book = (props) => {
         sx={{
           bgcolor: '#e9c6ad',
           '&:hover': {
-            border: '2px solid black',
+            backgroundColor: '#f9f9f9',
           },
         }}
       >
