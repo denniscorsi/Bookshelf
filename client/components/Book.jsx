@@ -8,6 +8,8 @@ import GptDialog from './GptDialog.jsx';
 import NoteDialog from './NoteDialog.jsx';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
@@ -119,8 +121,15 @@ const Book = (props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title, rating }),
-    }); 
+    });
   };
+
+  //creates custom syling for rating component
+  const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+      color: 'rgb(12, 134, 158)',
+    },
+  });
 
   return (
     <Paper elevation={10}>
@@ -131,12 +140,16 @@ const Book = (props) => {
         alignItems='center'
         sx={{
           bgcolor: '#e9c6ad',
+          '&:hover': {
+            border: '2px solid black',
+          },
         }}
       >
         <Typography variant='h6'>{props.title}</Typography>
         <Typography fontStyle='italic'>{props.author}</Typography>
         <img src={props.coverImg} />
-        <Rating
+        <StyledRating
+          icon={<MenuBookIcon />}
           value={props.rating}
           onChange={(event, newRating) => {
             setRating(event, newRating);
