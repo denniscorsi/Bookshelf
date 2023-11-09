@@ -1,58 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Typography, Box, Divider, Slide } from '@mui/material';
+import { Typography, Box, Divider } from '@mui/material';
 
-const ActionsDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
+const BestsellersDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
+  //will populate with ListItem componenets for top five bestsellers
+  const [bestsellers, setBestsellers] = useState([]);
 
   //do a fetch request to get the NYT array
-  fetch('/books./');
-
-
+  fetch('/books/nyt/hardcover-fiction')
+    .then((res) => res.json())
+    .then((books) => {
+      //console.log(books);
+      //just get first five books
+      books = books.slice(0, 5);
+      console.log('Books:', books);
+      const bestsellerBooks = books.map((book) => {
+        return (
+          <ListItem>
+            <ListItemButton
+            // onClick={() => {
+            //   handleActionClick('addNote');
+            // }}
+            >
+              <Typography variant='h5'>{book}</Typography>
+            </ListItemButton>
+          </ListItem>
+        );
+      });
+      setBestsellers(bestsellerBooks);
+    });
 
   return (
-    <Dialog onClose={handleClose} open={actionsOpen}>
+    <Dialog onClose={handleClose} open={true}>
       <Box
         sx={{
           border: '10px solid #0c869e',
           backgroundColor: '#DADAD6',
         }}
       >
-        <DialogTitle variant='h4'>Book Actions</DialogTitle>
+        <DialogTitle variant='h4'>NYT Bestsellers</DialogTitle>
         <Divider variant='middle' />
-        <List>
-          <ListItem>
-            <ListItemButton
-              onClick={() => {
-                handleActionClick('addNote');
-              }}
-            >
-              <Typography variant='h5'>Add Note</Typography>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => handleActionClick('recommend')}>
-              <Typography variant='h5'>Find Similar</Typography>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => handleActionClick('remove')}>
-              <Typography variant='h5'>Remove</Typography>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => handleActionClick('amazon')}>
-              <ShoppingCartIcon fontSize='large'></ShoppingCartIcon>
-            </ListItemButton>
-          </ListItem>
-        </List>
+        <List>{bestsellers}</List>
       </Box>
     </Dialog>
   );
 };
 
-export default ActionsDialog;
+export default BestsellersDialog;

@@ -42,6 +42,8 @@ module.exports = {
     },
     proxy: {
       '/books': 'http://localhost:3000',
+      '/books/nyt/*': 'http://localhost:3000',
+      '/books/nyt/hardcover-fiction': 'http://localhost:3000',
     },
   },
 };
