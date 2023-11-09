@@ -25,7 +25,8 @@ const Book = (props) => {
 
   // when the actions menu is opened, this stores the title of the connect book into title and opens the actions dialog
   const bookActions = (e) => {
-    const selected = e.target.parentElement.firstChild.innerText;
+    const selected =
+      e.target.parentElement.parentElement.firstChild.firstChild.innerText;
     setTitle(selected);
     setActionsOpen(true);
   };
@@ -113,7 +114,9 @@ const Book = (props) => {
   //will update rating for book in database
   const setRating = (event, rating) => {
     console.log(event.target);
-    const title = event.target.parentElement.parentElement.firstChild.innerText;
+    const title =
+      event.target.parentElement.parentElement.parentElement.firstChild
+        .innerText;
     console.log(title, rating);
     fetch('/books/ratings', {
       method: 'POST',
@@ -131,65 +134,97 @@ const Book = (props) => {
     },
   });
 
+  const StyledPaper = styled(Paper)({
+    border: '5px solid #0c869e',
+    borderRadius: '10px',
+  });
+
+  const StyledBox = styled(Box)({
+    borderRadius: '7px',
+  });
+
   return (
-    <Paper elevation={10}>
-      <Box
+    <StyledPaper elevation={10}>
+      <StyledBox
         padding={1}
         display='flex'
         flexDirection='column'
         alignItems='center'
+        justifyContent='space-between'
         sx={{
           bgcolor: '#e9c6ad',
           '&:hover': {
-            backgroundColor: '#f9f9f9',
+            backgroundColor: '#EEEDEA',
           },
+          height: '600px',
         }}
       >
-        <Typography variant='h6'>{props.title}</Typography>
-        <Typography fontStyle='italic'>{props.author}</Typography>
-        <img src={props.coverImg} />
-        <StyledRating
-          icon={<MenuBookIcon />}
-          value={props.rating}
-          onChange={(event, newRating) => {
-            setRating(event, newRating);
-          }}
-        />
-        <Tooltip
-          title={
-            <>
-              <Typography variant='subtitle2'>Notes:</Typography>
-              <Typography variant='caption'>{props.note}</Typography>
-            </>
-          }
-        >
-          <NotesRoundedIcon />
-        </Tooltip>
-        <Typography variant='body2'>{props.description}</Typography>
-        <Button variant='outlined' onClick={bookActions}>
-          Actions
-        </Button>
-        <ActionsDialog
-          handleClose={handleClose}
-          actionsOpen={actionsOpen}
-          handleActionClick={handleActionClick}
-        />
-        <NoteDialog
-          noteOpen={noteOpen}
-          handleClose={handleClose}
-          handleActionClick={handleActionClick}
-        />
-        <GptDialog
-          handleClose={handleClose}
-          gptOpen={gptOpen}
-          searchingGpt={searchingGpt}
-          newTitle={newTitle}
-          fullRec={fullRec}
-          hasNewBook={hasNewBook}
-          setHasNewBook={setHasNewBook}
-        />
-      </Box>
-    </Paper>
+        <Box display='flex' flexDirection='column' alignItems='center'>
+          <Typography variant='h6'>{props.title}</Typography>
+          <Typography paddingBottom={2} fontStyle='italic'>
+            {props.author}
+          </Typography>
+          <img
+            src={props.coverImg}
+            style={{
+              'box-shadow': '0px 30px 40px -25px rgba(0, 0, 0, 1)',
+              border: '3px solid #1d1006',
+            }}
+          />
+          <Box
+            paddingY={2}
+            display='flex'
+            flexDirection='column'
+            alignItems='center'
+          >
+            <StyledRating
+              icon={<MenuBookIcon />}
+              value={props.rating}
+              onChange={(event, newRating) => {
+                setRating(event, newRating);
+              }}
+            />
+            <Tooltip
+              title={
+                <>
+                  <Typography variant='subtitle2'>Notes:</Typography>
+                  <Typography variant='caption'>{props.note}</Typography>
+                </>
+              }
+            >
+              <NotesRoundedIcon />
+            </Tooltip>
+          </Box>
+          <Typography variant='body2' paddingX={1} paddingBottom={3}>
+            {props.description}
+          </Typography>
+        </Box>
+        <Box paddingBottom={2}>
+          <Button variant='outlined' onClick={bookActions}>
+            Actions
+          </Button>
+          <ActionsDialog
+            handleClose={handleClose}
+            actionsOpen={actionsOpen}
+            handleActionClick={handleActionClick}
+          />
+          <NoteDialog
+            noteOpen={noteOpen}
+            handleClose={handleClose}
+            handleActionClick={handleActionClick}
+          />
+          <GptDialog
+            handleClose={handleClose}
+            gptOpen={gptOpen}
+            searchingGpt={searchingGpt}
+            newTitle={newTitle}
+            fullRec={fullRec}
+            hasNewBook={hasNewBook}
+            setHasNewBook={setHasNewBook}
+          />
+        </Box>
+      </StyledBox>
+    </StyledPaper>
   );
 };
 

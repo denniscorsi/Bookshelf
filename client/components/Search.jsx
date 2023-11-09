@@ -48,7 +48,7 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
         justifyContent='space-around'
         alignItems='center'
         paddingY={3}
-        width='50%'
+        width='30%'
         margin='0px auto'
       >
         {/* {<Typography>Add Book to Shelf</Typography>} */}

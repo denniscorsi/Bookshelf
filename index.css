@@ -3,8 +3,9 @@ body {
 }
 
 h1 {
-  font-size: 3rem;
-  color: rgb(104, 213, 235);
+  font-size: 4rem;
+  color: #0c869e;
   margin: 15px auto;
+  padding-top: 15px;
   text-align: center;
 }
