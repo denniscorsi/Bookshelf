@@ -84,4 +84,15 @@ app.delete('/books', bookController.deleteBook, (req, res) => {
 
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'an error occured' },
+  };
+  const errOrb = Object.assign({}, defaultErr, err);
+  console.log(errObj.log);
+  res.status(errObj.status).json(errObj.message);
+});
+
 app.listen(3000, () => console.log('Server listening on 3000'));
