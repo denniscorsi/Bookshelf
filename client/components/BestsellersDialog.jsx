@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
@@ -14,30 +14,32 @@ const BestsellersDialog = ({
   //will populate with ListItem componenets for top five bestsellers
   const [bestsellers, setBestsellers] = useState([]);
 
-  //do a fetch request to get the NYT array
-  fetch('/books/nyt/hardcover-fiction')
-    .then((res) => res.json())
-    .then((books) => {
-      //console.log(books);
-      //just get first five books
-      books = books.slice(0, 5);
-      console.log('Books:', books);
-      const bestsellerBooks = books.map((book) => {
-        return (
-          <ListItem>
-            <ListItemButton
-              id={book}
-              // onClick={() => {
-              //   handleActionClick('addNote');
-              // }}
-            >
-              <Typography variant='h5'>{book}</Typography>
-            </ListItemButton>
-          </ListItem>
-        );
+  useEffect(() => {
+    //do a fetch request to get the NYT array
+    fetch('/books/nyt/hardcover-fiction')
+      .then((res) => res.json())
+      .then((books) => {
+        //console.log(books);
+        //just get first five books
+        books = books.slice(0, 5);
+        console.log('Books:', books);
+        const bestsellerBooks = books.map((book) => {
+          return (
+            <ListItem>
+              <ListItemButton
+                id={book}
+                onClick={() => {
+                  handleActionClick(book);
+                }}
+              >
+                <Typography variant='h5'>{book}</Typography>
+              </ListItemButton>
+            </ListItem>
+          );
+        });
+        setBestsellers(bestsellerBooks);
       });
-      setBestsellers(bestsellerBooks);
-    });
+  }, []);
 
   return (
     <Dialog onClose={handleClose} open={bestsellersOpen}>

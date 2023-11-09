@@ -7,7 +7,16 @@ const NYTBestsellers = () => {
 
   const handleClose = () => SetBestsellersOpen(false);
 
-  const handleActionClick = () => {};
+  const handleActionClick = (book) => {
+    fetch('/books', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ title: book }),
+    });
+    SetBestsellersOpen(false);
+  };
 
   return (
     <>
