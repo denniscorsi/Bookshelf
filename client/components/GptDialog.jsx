@@ -13,7 +13,6 @@ const GptDialog = ({
   hasNewBook,
   setHasNewBook,
 }) => {
-
   // adds recommended book to the database (by first doing a fetch to google's api)
   const addBook = (title) => {
     fetch('/books', {
@@ -31,17 +30,17 @@ const GptDialog = ({
     <Dialog onClose={handleClose} open={gptOpen}>
       <Box padding={3} textAlign='center'>
         <Box display={searchingGpt}>
-          <Typography variant='h6'>
-            Librarian Brainstorming Recommendation
-          </Typography>
           <Typography variant='h6' paddingBottom={3}>
-            Personalized For You!
+            Librarian Brainstorming
           </Typography>
+          {/* <Typography variant='h6' paddingBottom={3}>
+            Personalized For You!
+          </Typography> */}
           <CircularProgress />
         </Box>
         <Box spacing={2} display={searchingGpt === 'none' ? null : 'none'}>
           <Typography variant='h5'>We recommend {newTitle}</Typography>
-          <Typography>{fullRec}</Typography>
+          <Typography paddingY={3}>{fullRec}</Typography>
           <Button variant='contained' onClick={() => addBook(newTitle)}>
             Add {newTitle} to Shelf
           </Button>

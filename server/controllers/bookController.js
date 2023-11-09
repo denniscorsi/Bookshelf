@@ -86,8 +86,8 @@ bookController.updateRating = (req, res, next) => {
 
 // gets a recommendation from chatGPT, based on a single book
 bookController.findRec = async (req, res, next) => {
-  console.log('STOPPING REQUEST');
-  return next('not yet!');
+  // console.log('STOPPING REQUEST');
+  // return next('not yet!');
   console.log('CHATGPT REQUEST!');
   const { title } = req.body;
 
@@ -120,8 +120,8 @@ bookController.findRec = async (req, res, next) => {
 
 // gets a recommendation from chatGPT, based on array of likes
 bookController.findGeneralRec = async (req, res, next) => {
-  console.log('STOPPIN GENERAL REC REQUEST');
-  return next('not yet!');
+  // console.log('STOPPIN GENERAL REC REQUEST');
+  // return next('not yet!');
   console.log('CHATGPT REQUEST!');
   //favBooks will be an array of books the user likes.
   let { favBooks } = req.body;
