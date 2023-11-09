@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header.jsx';
 import Search from './Search.jsx';
 import Bookshelf from './Bookshelf.jsx';
+import NYTBestsellers from './NYTBestsellers.jsx';
 import { createTheme } from '@mui/material/styles';
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
         hasNewRating={hasNewRating}
         setHasNewRating={setHasNewRating}
       />
+      <NYTBestsellers />
     </>
   );
 };
