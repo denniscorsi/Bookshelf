@@ -18,7 +18,7 @@ const Bookshelf = ({
       <Grid container spacing={2} padding={2}>
         {books.map((book) => {
           return (
-            <Grid item xs={3}>
+            <Grid item xs={3} key={Math.random()}>
               <Book
                 key={book.title + Math.random()}
                 title={book.title}

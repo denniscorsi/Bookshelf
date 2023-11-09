@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Search from './Search.jsx';
 import Bookshelf from './Bookshelf.jsx';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-//can remove theme providor if I don't end up using it
+import { createTheme } from '@mui/material/styles';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
@@ -32,20 +31,18 @@ const App = () => {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Search setHasNewBook={setHasNewBook} hasNewBook={hasNewBook} />
-        <Bookshelf
-          books={books}
-          setHasNewBook={setHasNewBook}
-          hasNewBook={hasNewBook}
-          setHasDeletedBook={setHasDeletedBook}
-          hasDeletedBook={hasDeletedBook}
-          numNotes={numNotes}
-          setNumNotes={setNumNotes}
-          hasNewRating={hasNewRating}
-          setHasNewRating={setHasNewRating}
-        />
-      </ThemeProvider>
+      <Search setHasNewBook={setHasNewBook} hasNewBook={hasNewBook} />
+      <Bookshelf
+        books={books}
+        setHasNewBook={setHasNewBook}
+        hasNewBook={hasNewBook}
+        setHasDeletedBook={setHasDeletedBook}
+        hasDeletedBook={hasDeletedBook}
+        numNotes={numNotes}
+        setNumNotes={setNumNotes}
+        hasNewRating={hasNewRating}
+        setHasNewRating={setHasNewRating}
+      />
     </>
   );
 };

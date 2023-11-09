@@ -38,7 +38,7 @@ module.exports = {
 
   devServer: {
     static: {
-      publicPath: '/build',
+      publicPath: path.join(__dirname + 'build'),
     },
     proxy: {
       '/books': 'http://localhost:3000',
