@@ -12,6 +12,7 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
   const [newTitle, setNewTitle] = useState('??');
   const [fullRec, setfullRec] = useState(null);
 
+  // Fetch request for book typed into search field
   const search = () => {
     const title = document.getElementById('searchField').value;
     console.log('Fetching', title);
@@ -66,15 +67,9 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         borderColor: 'white',
-        color: 'white',
       },
       '&:hover fieldset': {
         borderColor: 'orange',
-      },
-      '& input': {
-        '&::placeholder': {
-          color: 'white',
-        },
       },
     },
   });
@@ -92,15 +87,20 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
         {/* {<Typography>Add Book to Shelf</Typography>} */}
         <StyledSearch
           sx={{
+            color: 'white',
             input: {
               color: 'orange',
               borderColor: 'White',
-              '&::placeholder': { color: 'white' },
             },
           }}
           id='searchField'
           label='Book Title'
           variant='outlined'
+          InputLabelProps={{
+            sx: {
+              color: 'gray',
+            },
+          }}
         />
         <Button variant='contained' onClick={search}>
           Add to Shelf
