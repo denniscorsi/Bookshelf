@@ -102,10 +102,27 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
             },
           }}
         />
-        <Button variant='contained' onClick={search}>
+        <Button
+          sx={{
+            backgroundColor: '#0c869e',
+            '&:hover': {
+              backgroundColor: 'orange',
+              color: 'black',
+            },
+          }}
+          variant='contained'
+          onClick={search}
+        >
           Add to Shelf
         </Button>
-        <Button onClick={gatherFavs}>Ask the Librarian</Button>
+        <Button
+          sx={{
+            color: 'orange',
+          }}
+          onClick={gatherFavs}
+        >
+          Ask the Librarian
+        </Button>
       </Box>
       <GptDialog
         handleClose={handleClose}

@@ -149,6 +149,9 @@ const Book = (props) => {
   const StyledPaper = styled(Paper)({
     border: '5px solid #0c869e',
     borderRadius: '10px',
+    '&:hover': {
+      // border: '5px solid #033f4b',
+    },
   });
 
   // custom syling for outer box of book card
@@ -218,7 +221,14 @@ const Book = (props) => {
           </Typography>
         </Box>
         <Box paddingBottom={2}>
-          <Button variant='outlined' onClick={bookActions}>
+          <Button
+            sx={{
+              color: '#0c869e',
+              borderColor: '0c869e',
+            }}
+            variant='outlined'
+            onClick={bookActions}
+          >
             Actions
           </Button>
           <ActionsDialog
