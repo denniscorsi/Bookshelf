@@ -154,13 +154,15 @@ const Book = (props) => {
         sx={{
           bgcolor: '#e9c6ad',
           '&:hover': {
-            backgroundColor: '#EEEDEA',
+            backgroundColor: '#DADAD6',
           },
           height: '600px',
         }}
       >
         <Box display='flex' flexDirection='column' alignItems='center'>
-          <Typography variant='h6'>{props.title}</Typography>
+          <Typography paddingTop={1} variant='h6'>
+            {props.title}
+          </Typography>
           <Typography paddingBottom={2} fontStyle='italic'>
             {props.author}
           </Typography>
@@ -169,6 +171,8 @@ const Book = (props) => {
             style={{
               'box-shadow': '0px 30px 40px -25px rgba(0, 0, 0, 1)',
               border: '3px solid #1d1006',
+              height: '200px',
+              width: 'auto',
             }}
           />
           <Box
