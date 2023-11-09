@@ -101,11 +101,11 @@ const Book = (props) => {
           .then((recData) => {
             console.log('recData post-parse: ', recData);
             const { title, fullRec } = recData;
-            console.log('DATA FROM RESPONSE'); // THESE ARE COMING IN AS UNDEFINED !!START HERE!!
+            console.log('DATA FROM RESPONSE');
             console.log('Recommended Title:', title);
             console.log('Full Rec:', fullRec);
             //stop loading component
-            setSearchingGpt('none'); //THIS IS WORKING
+            setSearchingGpt('none');
             //display book data in dialog
             setNewTitle(title);
             setfullRec(fullRec);

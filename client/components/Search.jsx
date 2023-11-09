@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Typography, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import GptDialog from './GptDialog.jsx';
 
-const Search = ({ setHasNewBook, hasNewBook }) => {
+const Search = ({ setHasNewBook, hasNewBook, books }) => {
+  const [searchGptOpen, setSearchGptOpen] = useState(false);
+  const [searchingGptGen, setSearchingGptGen] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [newTitle, setNewTitle] = useState('??');
+  const [fullRec, setfullRec] = useState(null);
+
   const search = () => {
     const title = document.getElementById('searchField').value;
     console.log('Fetching', title);
@@ -18,6 +25,37 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
       console.log('Added book', title);
       setHasNewBook(!hasNewBook);
     });
+  };
+
+  const handleClose = () => {
+    console.log('closed dialog');
+    setSearchGptOpen(false);
+  };
+
+  //get all books with a rating of 5, then open gptdialog, and initiate request to server
+  const gatherFavs = () => {
+    const favBooks = [];
+    books.forEach((book) => {
+      if (book.rating === 5) {
+        favBooks.push(book.title);
+      }
+    });
+    console.log(favBooks);
+    setSearchGptOpen(true);
+    fetch('/books/gpt/general', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ favBooks }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data); //made it to here, but recommendation doesn't show up. loading circle keeps spinning
+        setNewTitle(data.title);
+        setfullRec(data.fullRec);
+        setSearchingGptGen('none');
+      });
   };
 
   //adds styling to textfield
@@ -48,7 +86,7 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
         justifyContent='space-around'
         alignItems='center'
         paddingY={3}
-        width='30%'
+        width='40%'
         margin='0px auto'
       >
         {/* {<Typography>Add Book to Shelf</Typography>} */}
@@ -67,7 +105,17 @@ const Search = ({ setHasNewBook, hasNewBook }) => {
         <Button variant='contained' onClick={search}>
           Add to Shelf
         </Button>
+        <Button onClick={gatherFavs}>Ask the Librarian</Button>
       </Box>
+      <GptDialog
+        handleClose={handleClose}
+        gptOpen={searchGptOpen}
+        searchingGpt={searchingGptGen}
+        newTitle={newTitle}
+        fullRec={fullRec}
+        hasNewBook={hasNewBook}
+        setHasNewBook={setHasNewBook}
+      />
     </>
   );
 };

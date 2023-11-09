@@ -28,12 +28,14 @@ const App = () => {
     };
   }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating]);
 
-  const theme = createTheme();
-
   return (
     <>
       <Header />
-      <Search setHasNewBook={setHasNewBook} hasNewBook={hasNewBook} />
+      <Search
+        setHasNewBook={setHasNewBook}
+        hasNewBook={hasNewBook}
+        books={books}
+      />
       <Bookshelf
         books={books}
         setHasNewBook={setHasNewBook}
