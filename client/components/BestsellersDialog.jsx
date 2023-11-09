@@ -6,7 +6,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { Typography, Box, Divider } from '@mui/material';
 
-const BestsellersDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
+const BestsellersDialog = ({
+  handleClose,
+  bestsellersOpen,
+  handleActionClick,
+}) => {
   //will populate with ListItem componenets for top five bestsellers
   const [bestsellers, setBestsellers] = useState([]);
 
@@ -22,9 +26,10 @@ const BestsellersDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
         return (
           <ListItem>
             <ListItemButton
-            // onClick={() => {
-            //   handleActionClick('addNote');
-            // }}
+              id={book}
+              // onClick={() => {
+              //   handleActionClick('addNote');
+              // }}
             >
               <Typography variant='h5'>{book}</Typography>
             </ListItemButton>
@@ -35,7 +40,7 @@ const BestsellersDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
     });
 
   return (
-    <Dialog onClose={handleClose} open={true}>
+    <Dialog onClose={handleClose} open={bestsellersOpen}>
       <Box
         sx={{
           border: '10px solid #0c869e',

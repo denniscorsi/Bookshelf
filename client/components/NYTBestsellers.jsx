@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Dialog, Button, Box } from '@mui/material';
 import BestsellersDialog from './BestsellersDialog.jsx';
 
 const NYTBestsellers = () => {
+  const [bestsellersOpen, SetBestsellersOpen] = useState(false);
+
+  const handleClose = () => SetBestsellersOpen(false);
+
+  const handleActionClick = () => {};
+
   return (
     <>
       <Box display='flex' justifyContent='center'>
@@ -15,11 +21,16 @@ const NYTBestsellers = () => {
               color: 'black',
             },
           }}
+          onClick={() => SetBestsellersOpen(true)}
         >
           See NYT Bestsellers
         </Button>
       </Box>
-      <BestsellersDialog />
+      <BestsellersDialog
+        handleClose={handleClose}
+        bestsellersOpen={bestsellersOpen}
+        handleActionClick={handleActionClick}
+      />
     </>
   );
 };
