@@ -11,14 +11,26 @@ const Header = () => (
       }}
     />
     <Typography
-      paddingX={6}
+      paddingLeft={6}
       paddingBottom={2}
       variant='h1'
       sx={{
         fontWeight: '700',
+        fontSize: '120px',
+        transform: 'rotate(-25deg)',
       }}
     >
-      Bookshelf
+      B
+    </Typography>
+    <Typography
+      paddingBottom={8}
+      variant='h1'
+      sx={{
+        fontWeight: '700',
+        textDecoration: 'underline',
+      }}
+    >
+      ookshelf
     </Typography>
   </Box>
 );

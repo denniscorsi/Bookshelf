@@ -80,7 +80,7 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
         display='flex'
         justifyContent='space-around'
         alignItems='center'
-        paddingY={3}
+        paddingBottom={3}
         width='40%'
         margin='0px auto'
       >
