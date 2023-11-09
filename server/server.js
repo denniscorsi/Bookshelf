@@ -73,17 +73,21 @@ app.post(
   }
 );
 
+// add a note to a book in the database
 app.post('/books/notes', bookController.addNote, (req, res) => {
   console.log('Book note added:', res.locals.updatedBook);
   res.status(200).json(res.locals.updatedBook);
 });
 
+//remove a book from the database
 app.delete('/books', bookController.deleteBook, (req, res) => {
   res.status(200).end();
 });
 
+//serve static pages
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
+//global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
