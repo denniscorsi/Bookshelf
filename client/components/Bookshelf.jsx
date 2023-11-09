@@ -10,6 +10,8 @@ const Bookshelf = ({
   hasNewBook,
   numNotes,
   setNumNotes,
+  hasNewRating,
+  setHasNewRating,
 }) => {
   return (
     <>
@@ -31,6 +33,8 @@ const Bookshelf = ({
                 hasNewBook={hasNewBook}
                 numNotes={numNotes}
                 setNumNotes={setNumNotes}
+                hasNewRating={hasNewRating}
+                setHasNewRating={setHasNewRating}
               />
             </Grid>
           );

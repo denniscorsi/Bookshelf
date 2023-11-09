@@ -8,9 +8,11 @@ const App = () => {
   const [books, setBooks] = useState([{}]);
   const [hasNewBook, setHasNewBook] = useState(false);
   const [hasDeletedBook, setHasDeletedBook] = useState(false);
-  const [numNotes, setNumNotes] = useState(1);
+  const [numNotes, setNumNotes] = useState(0);
+  const [hasNewRating, setHasNewRating] = useState(true);
 
   console.log('rendering App');
+  console.log('numNotes:', numNotes);
   useEffect(() => {
     console.log('Running useEffect');
     fetch('/books')
@@ -24,7 +26,7 @@ const App = () => {
     return () => {
       console.log('Ran cleanup function');
     };
-  }, [hasNewBook, hasDeletedBook]);
+  }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating]);
 
   const theme = createTheme();
 
@@ -40,6 +42,8 @@ const App = () => {
           hasDeletedBook={hasDeletedBook}
           numNotes={numNotes}
           setNumNotes={setNumNotes}
+          hasNewRating={hasNewRating}
+          setHasNewRating={setHasNewRating}
         />
       </ThemeProvider>
     </>

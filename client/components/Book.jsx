@@ -20,8 +20,16 @@ const Book = (props) => {
   const [fullRec, setfullRec] = useState(null);
   const [searchingGpt, setSearchingGpt] = useState(null);
 
-  const { setHasDeletedBook, hasDeletedBook, setHasNewBook, hasNewBook } =
-    props;
+  const {
+    setHasDeletedBook,
+    hasDeletedBook,
+    setHasNewBook,
+    hasNewBook,
+    setNumNotes,
+    numNotes,
+    hasNewRating,
+    setHasNewRating,
+  } = props;
 
   // when the actions menu is opened, this stores the title of the connect book into title and opens the actions dialog
   const bookActions = (e) => {
@@ -54,11 +62,14 @@ const Book = (props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ title, note }),
-        }).then(() => {
-          console.log('done');
-          setNoteOpen(false);
-          props.setNumNotes(props.numNotes);
-        });
+        })
+          .then((res) => res.json())
+          .then((update) => {
+            console.log('Added note:', update);
+            console.log('NumNotes:', numNotes);
+            setNumNotes(update);
+            setNoteOpen(false);
+          });
         break;
       case 'remove':
         fetch('/books', {
@@ -124,7 +135,7 @@ const Book = (props) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title, rating }),
-    });
+    }).then(setHasNewRating(!hasNewRating));
   };
 
   //creates custom syling for rating component
@@ -134,17 +145,20 @@ const Book = (props) => {
     },
   });
 
+  // custom styling for book card
   const StyledPaper = styled(Paper)({
     border: '5px solid #0c869e',
     borderRadius: '10px',
   });
 
+  // custom syling for outer box of book card
   const StyledBox = styled(Box)({
     borderRadius: '7px',
   });
 
   return (
     <StyledPaper elevation={10}>
+      {/* {<h1>{props.note}</h1>} */}
       <StyledBox
         padding={1}
         display='flex'
@@ -169,7 +183,7 @@ const Book = (props) => {
           <img
             src={props.coverImg}
             style={{
-              'box-shadow': '0px 30px 40px -25px rgba(0, 0, 0, 1)',
+              boxShadow: '0px 30px 40px -25px rgba(0, 0, 0, 1)',
               border: '3px solid #1d1006',
               height: '200px',
               width: 'auto',
