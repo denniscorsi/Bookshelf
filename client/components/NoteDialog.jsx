@@ -14,7 +14,16 @@ const NoteDialog = ({ handleClose, handleActionClick, noteOpen }) => {
 
   return (
     <Dialog onClose={handleClose} open={noteOpen}>
-      <Box paddingX={4} paddingY={4} display='flex' flexDirection='column'>
+      <Box
+        paddingX={4}
+        paddingY={4}
+        display='flex'
+        flexDirection='column'
+        sx={{
+          border: '10px solid #0c869e',
+          backgroundColor: '#DADAD6',
+        }}
+      >
         <Typography>Add Note</Typography>
         <TextField
           onChange={typing}
