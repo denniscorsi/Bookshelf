@@ -5,48 +5,46 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
-//props needed: handleClose, actionsOpen, handleActionClick
+import { Typography, Box, Divider, Slide } from '@mui/material';
 
 const ActionsDialog = ({ handleClose, actionsOpen, handleActionClick }) => {
   return (
     <Dialog onClose={handleClose} open={actionsOpen}>
-      <DialogTitle>Book Actions</DialogTitle>
-      <List>
-        <ListItem>
-          <ListItemButton
-            onClick={() => {
-              handleActionClick('addNote');
-            }}
-          >
-            Add Note
-          </ListItemButton>
-        </ListItem>
-        {/* {<ListItem>
-          <ListItemButton
-            onClick={() => {
-              handleActionClick('favorite');
-            }}
-          >
-            Favorite
-          </ListItemButton>
-        </ListItem>} */}
-        <ListItem>
-          <ListItemButton onClick={() => handleActionClick('recommend')}>
-            Find Similar
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={() => handleActionClick('remove')}>
-            Remove
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={() => handleActionClick('amazon')}>
-            <ShoppingCartIcon></ShoppingCartIcon>
-          </ListItemButton>
-        </ListItem>
-      </List>
+      <Box
+        sx={{
+          border: '10px solid #0c869e',
+          backgroundColor: '#DADAD6',
+        }}
+      >
+        <DialogTitle variant='h4'>Book Actions</DialogTitle>
+        <Divider variant='middle' />
+        <List>
+          <ListItem>
+            <ListItemButton
+              onClick={() => {
+                handleActionClick('addNote');
+              }}
+            >
+              <Typography variant='h5'>Add Note</Typography>
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={() => handleActionClick('recommend')}>
+              <Typography variant='h5'>Find Similar</Typography>
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={() => handleActionClick('remove')}>
+              <Typography variant='h5'>Remove</Typography>
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={() => handleActionClick('amazon')}>
+              <ShoppingCartIcon fontSize='large'></ShoppingCartIcon>
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
     </Dialog>
   );
 };
