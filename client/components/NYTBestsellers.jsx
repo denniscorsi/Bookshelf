@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Dialog, Button, Box } from '@mui/material';
 import BestsellersDialog from './BestsellersDialog.jsx';
 
-const NYTBestsellers = () => {
+const NYTBestsellers = ({ hasNewBook, setHasNewBook }) => {
   const [bestsellersOpen, SetBestsellersOpen] = useState(false);
 
   const handleClose = () => SetBestsellersOpen(false);
@@ -14,16 +14,19 @@ const NYTBestsellers = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ title: book }),
+    }).then(() => {
+      setHasNewBook(!hasNewBook);
     });
     SetBestsellersOpen(false);
   };
 
   return (
     <>
-      <Box display='flex' justifyContent='center'>
+      <Box display='flex' justifyContent='center' padding={3}>
         <Button
           variant='contained'
           sx={{
+            padding: '20px',
             backgroundColor: '#0c869e',
             '&:hover': {
               backgroundColor: 'orange',
@@ -32,7 +35,7 @@ const NYTBestsellers = () => {
           }}
           onClick={() => SetBestsellersOpen(true)}
         >
-          See NYT Bestsellers
+          <Typography variant='h6'>See NYT Bestsellers</Typography>
         </Button>
       </Box>
       <BestsellersDialog
