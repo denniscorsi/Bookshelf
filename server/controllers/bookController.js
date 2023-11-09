@@ -104,7 +104,7 @@ bookController.findRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with the name of the book. Also explain why I'd like this book based on enjoying ${title} Respond with less than 65 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with just the title of the book. Then explain why I'd like this book based on enjoying ${title} Respond with less than 65 words.`,
       },
     ],
     temperature: 1,
@@ -141,7 +141,7 @@ bookController.findGeneralRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the following books: ${favBooks}. Begin your response with the name of the book. Also explain why I'd enjoy this book based on the books I liked. Respond with less than 90 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the following books: ${favBooks}. Begin your response with just the name of the book. Then explain why I'd enjoy this book based on the books I liked. Respond with less than 90 words.`,
       },
     ],
     temperature: 1,
