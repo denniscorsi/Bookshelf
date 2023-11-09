@@ -179,4 +179,41 @@ bookController.unpackRec = (req, res, next) => {
   next();
 };
 
+bookController.getNYTList = (req, res, next) => {
+  const { category } = req.params;
+  console.log('CATEGORY:', category);
+  const key = 'aYY0LRbzKdAHRUQnGUEkBzb5JqMXxWr5';
+  const url =
+    'https://api.nytimes.com/svc/books/v3/lists/current/' +
+    category +
+    '.json?api-key=' +
+    key;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('NYT DATA....', data);
+      const bestsellersPacked = data.results.books; //this will be an array ob objects with a lot of info on the books
+      res.locals.bestsellersPacked = bestsellersPacked;
+      return next();
+    });
+};
+
+bookController.unpackNYTList = (req, res, next) => {
+  String.prototype.titleCase = function () {
+    let str = this.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+    }
+    return str.join(' ');
+  };
+
+  const { bestsellersPacked } = res.locals;
+  const bestsellers = [];
+  bestsellersPacked.forEach((bestseller) => {
+    bestsellers.push(bestseller.title.titleCase());
+  });
+  res.locals.bestsellers = bestsellers;
+  return next();
+};
+
 module.exports = bookController;

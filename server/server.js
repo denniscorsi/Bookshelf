@@ -52,6 +52,16 @@ app.get('/books', bookController.loadBooks, (req, res) => {
   res.status(200).json(res.locals.books);
 });
 
+//get an array of titles of the NYT best sellers. Take in a param of the name of the list (e.g. 'hardcover-fiction' )
+app.get(
+  '/books/nyt/:category',
+  bookController.getNYTList,
+  bookController.unpackNYTList,
+  (req, res) => {
+    res.status(200).json(res.locals.bestsellers);
+  }
+);
+
 //send post request to books endpoint with the title in the body to create a new book in the database
 app.post(
   '/books',
