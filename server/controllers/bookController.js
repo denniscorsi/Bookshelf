@@ -84,7 +84,7 @@ bookController.updateRating = (req, res, next) => {
   });
 };
 
-// gets a recommendation from chatGPT
+// gets a recommendation from chatGPT, based on a single book
 bookController.findRec = async (req, res, next) => {
   console.log('STOPPING REQUEST');
   return next('not yet!');
@@ -109,6 +109,41 @@ bookController.findRec = async (req, res, next) => {
     ],
     temperature: 1,
     max_tokens: 120,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+
+  res.locals.GPTresponse = GPTresponse;
+  return next();
+};
+
+// gets a recommendation from chatGPT, based on array of likes
+bookController.findGeneralRec = async (req, res, next) => {
+  console.log('CHATGPT REQUEST!');
+  //topBooks will be an array of books the user likes.
+  let { topBooks } = req.body;
+  console.log(topBooks);
+  topBooks = topBooks.toString();
+
+  const openai = new OpenAI({
+    apiKey: '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', //make this a secret env variable
+  });
+
+  const GPTresponse = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a helpful librarian. ',
+      },
+      {
+        role: 'user',
+        content: `Please recommend one book that I would like, knowing that I liked the following books: ${topBooks}. Begin your response with the name of the book. Also explain why I'd enjoy this book based on the books I liked. Respond with less than 90 words.`,
+      },
+    ],
+    temperature: 1,
+    max_tokens: 150,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,

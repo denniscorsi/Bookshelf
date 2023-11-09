@@ -15,7 +15,21 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(index);
 });
 
-//post request for books/gpt get a book recommendation from chatGPT
+//post request for books/gpt/general gets a book recommendation from chatGPT based on all likes
+app.post(
+  '/books/gpt/general',
+  bookController.findGeneralRec,
+  bookController.unpackRec,
+  (req, res) => {
+    const data = {
+      title: res.locals.title,
+      fullRec: res.locals.fullRec,
+    };
+    res.status(200).json(data);
+  }
+);
+
+//post request for books/gpt gets a book recommendation from chatGPT based on "find similar"
 app.post(
   '/books/gpt',
   bookController.findRec,
@@ -44,7 +58,6 @@ app.post(
   bookController.findBook,
   bookController.unpackBookData,
   bookController.addBook,
-  //bookController.buildBookComponent,
   (req, res) => {
     res.status(200).json(res.locals.newBook);
   }
