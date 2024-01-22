@@ -9,4 +9,8 @@ import '@fontsource/roboto/700.css';
 import '../index.css';
 
 const root = createRoot(document.querySelector('#root'));
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
