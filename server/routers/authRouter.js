@@ -1,10 +1,5 @@
 const authRouter = require('express').Router();
 const authController = require('../controllers/authController');
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGO_URI);
-
-
 
 // post: login
 
