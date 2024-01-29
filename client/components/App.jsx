@@ -5,6 +5,8 @@ import Search from './Search.jsx';
 import Bookshelf from './Bookshelf.jsx';
 import NYTBestsellers from './NYTBestsellers.jsx';
 import { createTheme } from '@mui/material/styles';
+import Register from './Register.jsx';
+import Login from './Login.jsx';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
@@ -12,6 +14,7 @@ const App = () => {
   const [hasDeletedBook, setHasDeletedBook] = useState(false);
   const [numNotes, setNumNotes] = useState(0);
   const [hasNewRating, setHasNewRating] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   console.log('rendering App');
   console.log('numNotes:', numNotes);
@@ -32,30 +35,46 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <div id="account">
+        {!isLoggedIn && <Link to="/register">Register</Link>}
+        {!isLoggedIn && <Link to="/login">Login</Link>}
+        {isLoggedIn && <Link to="/shelf">Shelf</Link>}
+      </div>
       <Header />
       <Search
         setHasNewBook={setHasNewBook}
         hasNewBook={hasNewBook}
         books={books}
       />
-      <Link to="/test">TEST</Link>
-      <Link to="/hiiii">HIII</Link>
-      <Routes>
-        <Route path="/test" element={<h1>TEST</h1>} />
-        <Route path="/hiiii" element={<h1>HIII</h1>} />
-      </Routes>
-      <Bookshelf
-        books={books}
-        setHasNewBook={setHasNewBook}
-        hasNewBook={hasNewBook}
-        setHasDeletedBook={setHasDeletedBook}
-        hasDeletedBook={hasDeletedBook}
-        numNotes={numNotes}
-        setNumNotes={setNumNotes}
-        hasNewRating={hasNewRating}
-        setHasNewRating={setHasNewRating}
-      />
-      <NYTBestsellers hasNewBook={hasNewBook} setHasNewBook={setHasNewBook} />
+
+      <div id="main">
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/shelf"
+            element={
+              <>
+                <Bookshelf
+                  books={books}
+                  setHasNewBook={setHasNewBook}
+                  hasNewBook={hasNewBook}
+                  setHasDeletedBook={setHasDeletedBook}
+                  hasDeletedBook={hasDeletedBook}
+                  numNotes={numNotes}
+                  setNumNotes={setNumNotes}
+                  hasNewRating={hasNewRating}
+                  setHasNewRating={setHasNewRating}
+                />
+                <NYTBestsellers
+                  hasNewBook={hasNewBook}
+                  setHasNewBook={setHasNewBook}
+                />
+              </>
+            }
+          />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 };

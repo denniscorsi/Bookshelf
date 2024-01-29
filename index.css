@@ -9,3 +9,8 @@ h1 {
   padding-top: 15px;
   text-align: center;
 }
+
+h2 {
+  font-size: 4rem;
+  color: #0c869e;
+}
