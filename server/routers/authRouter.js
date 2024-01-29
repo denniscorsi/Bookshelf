@@ -8,7 +8,7 @@ authRouter.post(
   authController.register,
   // authController.createSession,
   (req, res) => {
-    res.status().json({ ok: true, message: 'User successfully registered' });
+    res.status(201).json({ ok: true, message: 'User successfully registered' });
   }
 );
 

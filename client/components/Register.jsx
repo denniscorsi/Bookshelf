@@ -29,7 +29,7 @@ const registerSubmit = () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: { user },
+    body: JSON.stringify({ user }),
   })
     .then((res) => res.json())
     .then((response) => {

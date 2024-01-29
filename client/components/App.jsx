@@ -14,7 +14,7 @@ const App = () => {
   const [hasDeletedBook, setHasDeletedBook] = useState(false);
   const [numNotes, setNumNotes] = useState(0);
   const [hasNewRating, setHasNewRating] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   console.log('rendering App');
   console.log('numNotes:', numNotes);

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bookRouter = require('./routers/bookRouter');
 const authRouter = require('./routers/authRouter');
+require('dotenv').config();
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/books', bookRouter);
+app.use('/auth', authRouter);
 
 //serve static pages
 app.use('/build', express.static(path.join(__dirname, '../build')));
@@ -27,7 +29,7 @@ app.use((err, req, res, next) => {
     status: 500,
     message: { err: 'an error occured' },
   };
-  const errOrb = Object.assign({}, defaultErr, err);
+  const errObj = Object.assign({}, defaultErr, err);
   console.log(errObj.log);
   res.status(errObj.status).json(errObj.message);
 });
