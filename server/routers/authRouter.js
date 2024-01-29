@@ -6,9 +6,9 @@ const authController = require('../controllers/authController');
 authRouter.post(
   '/register',
   authController.register,
-  authController.createSession,
+  // authController.createSession,
   (req, res) => {
-    res.status().send();
+    res.status().json({ ok: true, message: 'User successfully registered' });
   }
 );
 
