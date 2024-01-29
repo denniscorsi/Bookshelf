@@ -1,12 +1,12 @@
 const express = require('express');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const path = require('path');
 const bookRouter = require('./routers/bookRouter');
+const authRouter = require('./routers/authRouter');
 
 const app = express();
 
-const mongoURI = 'mongodb://localhost/bookapp';
-mongoose.connect(mongoURI);
+mongoose.connect(process.env.MONGO_URI);
 
 app.use(express.json());
 
