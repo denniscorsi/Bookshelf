@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/userModel');
+const Session = require('../models/sessionModel');
+const { SESSION_LENGTH } = require('../../constants');
 
 const authController = {};
 
@@ -46,6 +48,22 @@ authController.register = async (req, res, next) => {
   );
 };
 
-authController.createSession = (req, res, next) => {};
+authController.createSession = (req, res, next) => {
+  const ssid = Math.floor(Math.random() * 1000000);
+  const session = Session.create({ ssid }).then(
+    (newSession) => {
+      res.cookie('ssid', ssid, { maxAge: SESSION_LENGTH, httpOnly: true });
+      return next();
+    },
+    (err) => {
+      return next({
+        log: 'Error creating new session in database',
+        message: {
+          err: 'creating a new session in MongoDB failed in authController.createSession',
+        },
+      });
+    }
+  );
+};
 
 module.exports = authController;
