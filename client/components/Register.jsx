@@ -18,29 +18,30 @@ const StyledInput = styled(TextField)({
   },
 });
 
-const registerSubmit = () => {
-  const username = document.getElementById('username-register').value;
-  const email = document.getElementById('email-register').value;
-  const password = document.getElementById('password-register').value;
-  const user = { username, email, password };
+const Register = ({ setIsLoggedIn }) => {
+  const registerSubmit = () => {
+    const username = document.getElementById('username-register').value;
+    const email = document.getElementById('email-register').value;
+    const password = document.getElementById('password-register').value;
+    const user = { username, email, password };
 
-  fetch('/auth/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ user }),
-  })
-    .then((res) => res.json())
-    .then((response) => {
-      console.log(response);
+    fetch('/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user }),
     })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+      .then((res) => res.json())
+      .then((response) => {
+        if (response.ok) setIsLoggedIn(true);
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-const Register = () => {
   return (
     <div>
       <Typography paddingLeft={6} paddingBottom={2} variant="h2">

@@ -18,28 +18,29 @@ const StyledInput = styled(TextField)({
   },
 });
 
-const loginSubmit = () => {
-  const username = document.getElementById('username-login').value;
-  const password = document.getElementById('password-login').value;
-  const user = { username, password };
+const Login = ({ setIsLoggedIn }) => {
+  const loginSubmit = () => {
+    const username = document.getElementById('username-login').value;
+    const password = document.getElementById('password-login').value;
+    const user = { username, password };
 
-  fetch('/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ user }),
-  })
-    .then((res) => res.json())
-    .then((response) => {
-      console.log(response);
+    fetch('/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user }),
     })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response);
+        if (response.ok) setIsLoggedIn(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-const Login = () => {
   return (
     <div>
       <Typography paddingLeft={6} paddingBottom={2} variant="h2">

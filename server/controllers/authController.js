@@ -92,4 +92,9 @@ authController.createSession = (req, res, next) => {
   );
 };
 
+// TODO:
+authController.validateSession = (req, res, next) => {
+  const { ssid } = req.cookies;
+};
+
 module.exports = authController;

@@ -49,8 +49,14 @@ const App = () => {
 
       <div id="main">
         <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route
+            path="/register"
+            element={<Register setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/login"
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          />
           <Route
             path="/shelf"
             element={
