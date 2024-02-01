@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from 'react-router-dom';
 import Header from './Header.jsx';
 import Search from './Search.jsx';
 import Bookshelf from './Bookshelf.jsx';
@@ -51,11 +57,15 @@ const App = () => {
         <Routes>
           <Route
             path="/register"
-            element={<Register setIsLoggedIn={setIsLoggedIn} />}
+            element={
+              <Register isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            }
           />
           <Route
             path="/login"
-            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+            element={
+              <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            }
           />
           <Route
             path="/shelf"

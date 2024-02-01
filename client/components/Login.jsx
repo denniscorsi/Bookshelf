@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { Typography, Button } from '@mui/material';
@@ -18,7 +19,10 @@ const StyledInput = styled(TextField)({
   },
 });
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+  const navigate = useNavigate();
+  if (isLoggedIn) navigate('/shelf');
+
   const loginSubmit = () => {
     const username = document.getElementById('username-login').value;
     const password = document.getElementById('password-login').value;
