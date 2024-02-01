@@ -21,4 +21,8 @@ authRouter.post(
   }
 );
 
+authRouter.get('/session', authController.validateSession, (req, res) => {
+  res.status(200).json(true);
+});
+
 module.exports = authRouter;

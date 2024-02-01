@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const bookRouter = require('./routers/bookRouter');
@@ -10,6 +11,7 @@ const app = express();
 mongoose.connect(process.env.MONGO_URI);
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   const index = path.join(__dirname, '../index.html');

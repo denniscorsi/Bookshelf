@@ -24,6 +24,15 @@ const App = () => {
 
   console.log('rendering App');
   console.log('numNotes:', numNotes);
+
+  const checkExistingSession = () => {
+    fetch('/auth/session')
+      .then((res) => res.json())
+      .then((session) => setIsLoggedIn(session));
+  };
+
+  useEffect(checkExistingSession, []);
+
   useEffect(() => {
     console.log('Running useEffect');
     fetch('/books')

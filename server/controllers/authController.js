@@ -92,9 +92,16 @@ authController.createSession = (req, res, next) => {
   );
 };
 
-// TODO:
-authController.validateSession = (req, res, next) => {
-  const { ssid } = req.cookies;
+authController.validateSession = async (req, res, next) => {
+  console.log('entered validate session');
+
+  const { username, ssid } = req.cookies;
+
+  if (!username || !ssid) return res.status(200).json(false);
+
+  const session = await Session.findOne({ ssid });
+  if (!session) return res.status(200).json(false);
+  return next();
 };
 
 module.exports = authController;
