@@ -35,6 +35,7 @@ authController.register = async (req, res, next) => {
   User.create(user).then(
     (newUser) => {
       console.log('Created new user:', newUser);
+      res.cookie('username', username, { httpOnly: true });
       return next();
     },
     (err) => {
@@ -48,10 +49,35 @@ authController.register = async (req, res, next) => {
   );
 };
 
+authController.login = async (req, res, next) => {
+  const { username, password } = req.body.user;
+
+  console.log('entered login');
+
+  // Make sure username or email don't already exist
+  let foundUser = await User.findOne({ username });
+  if (foundUser) {
+    bcrypt.compare(password, foundUser.password, (err, result) => {
+      if (!result) {
+        return res
+          .status(401)
+          .json({ ok: false, message: 'Invalid credentials' });
+      } else {
+        console.log('found!');
+        res.cookie('username', username);
+        return next();
+      }
+    });
+  } else {
+    return res.status(401).json({ ok: false, message: 'Invalid credentials' });
+  }
+};
+
 authController.createSession = (req, res, next) => {
   const ssid = Math.floor(Math.random() * 1000000);
   const session = Session.create({ ssid }).then(
     (newSession) => {
+      console.log('Created session', newSession);
       res.cookie('ssid', ssid, { maxAge: SESSION_LENGTH, httpOnly: true });
       return next();
     },

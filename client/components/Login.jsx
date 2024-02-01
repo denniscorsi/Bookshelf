@@ -18,7 +18,26 @@ const StyledInput = styled(TextField)({
   },
 });
 
-const loginSubmit = () => {};
+const loginSubmit = () => {
+  const username = document.getElementById('username-login').value;
+  const password = document.getElementById('password-login').value;
+  const user = { username, password };
+
+  fetch('/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const Login = () => {
   return (
@@ -29,14 +48,14 @@ const Login = () => {
       <form>
         <StyledInput
           required
-          id="username-register"
+          id="username-login"
           label="username"
           variant="outlined"
           type="username"
         />
         <StyledInput
           required
-          id="password-register"
+          id="password-login"
           label="password"
           type="password"
           variant="outlined"

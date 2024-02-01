@@ -1,5 +1,5 @@
 const constants = {
-  SESSION_LENGTH: 900
-}
+  SESSION_LENGTH: 600000,
+};
 
 module.exports = constants;

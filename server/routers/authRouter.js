@@ -12,4 +12,13 @@ authRouter.post(
   }
 );
 
+authRouter.post(
+  '/login',
+  authController.login,
+  authController.createSession,
+  (req, res) => {
+    res.status(201).json({ ok: true, message: 'User successfully logged in' });
+  }
+);
+
 module.exports = authRouter;
