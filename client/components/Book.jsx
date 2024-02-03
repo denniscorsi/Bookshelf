@@ -3,9 +3,9 @@ import Paper from '@mui/material/Paper';
 import { Typography, Rating } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/system';
-import ActionsDialog from './ActionsDialog.jsx';
-import GptDialog from './GptDialog.jsx';
-import NoteDialog from './NoteDialog.jsx';
+import ActionsDialog from './Dialogs/ActionsDialog.jsx';
+import GptDialog from './Dialogs/GptDialog.jsx';
+import NoteDialog from './Dialogs/NoteDialog.jsx';
 import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
@@ -164,10 +164,10 @@ const Book = (props) => {
       {/* {<h1>{props.note}</h1>} */}
       <StyledBox
         padding={1}
-        display='flex'
-        flexDirection='column'
-        alignItems='center'
-        justifyContent='space-between'
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="space-between"
         sx={{
           bgcolor: '#e9c6ad',
           '&:hover': {
@@ -176,11 +176,11 @@ const Book = (props) => {
           height: '600px',
         }}
       >
-        <Box display='flex' flexDirection='column' alignItems='center'>
-          <Typography paddingTop={1} variant='h6'>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography paddingTop={1} variant="h6">
             {props.title}
           </Typography>
-          <Typography paddingBottom={2} fontStyle='italic'>
+          <Typography paddingBottom={2} fontStyle="italic">
             {props.author}
           </Typography>
           <img
@@ -194,9 +194,9 @@ const Book = (props) => {
           />
           <Box
             paddingY={2}
-            display='flex'
-            flexDirection='column'
-            alignItems='center'
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
           >
             <StyledRating
               icon={<MenuBookIcon />}
@@ -208,15 +208,15 @@ const Book = (props) => {
             <Tooltip
               title={
                 <>
-                  <Typography variant='subtitle2'>Notes:</Typography>
-                  <Typography variant='caption'>{props.note}</Typography>
+                  <Typography variant="subtitle2">Notes:</Typography>
+                  <Typography variant="caption">{props.note}</Typography>
                 </>
               }
             >
               <NotesRoundedIcon />
             </Tooltip>
           </Box>
-          <Typography variant='body2' paddingX={1} paddingBottom={3}>
+          <Typography variant="body2" paddingX={1} paddingBottom={3}>
             {props.description}
           </Typography>
         </Box>
@@ -226,7 +226,7 @@ const Book = (props) => {
               color: '#0c869e',
               borderColor: '0c869e',
             }}
-            variant='outlined'
+            variant="outlined"
             onClick={bookActions}
           >
             Actions

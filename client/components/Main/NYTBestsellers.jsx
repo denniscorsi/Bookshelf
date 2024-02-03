@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Dialog, Button, Box } from '@mui/material';
-import BestsellersDialog from './BestsellersDialog.jsx';
+import BestsellersDialog from '../Dialogs/BestsellersDialog.jsx';
 
 const NYTBestsellers = ({ hasNewBook, setHasNewBook }) => {
   const [bestsellersOpen, SetBestsellersOpen] = useState(false);
@@ -22,9 +22,9 @@ const NYTBestsellers = ({ hasNewBook, setHasNewBook }) => {
 
   return (
     <>
-      <Box display='flex' justifyContent='center' padding={3}>
+      <Box display="flex" justifyContent="center" padding={3}>
         <Button
-          variant='contained'
+          variant="contained"
           sx={{
             padding: '20px',
             backgroundColor: '#0c869e',
@@ -35,7 +35,7 @@ const NYTBestsellers = ({ hasNewBook, setHasNewBook }) => {
           }}
           onClick={() => SetBestsellersOpen(true)}
         >
-          <Typography variant='h6'>See NYT Bestsellers</Typography>
+          <Typography variant="h6">See NYT Bestsellers</Typography>
         </Button>
       </Box>
       <BestsellersDialog

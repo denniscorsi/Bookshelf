@@ -11,8 +11,8 @@ import Search from './Search.jsx';
 import Bookshelf from './Bookshelf.jsx';
 import NYTBestsellers from './NYTBestsellers.jsx';
 import { createTheme } from '@mui/material/styles';
-import Register from './Register.jsx';
-import Login from './Login.jsx';
+import Register from '../Account/Register.jsx';
+import Login from '../Account/Login.jsx';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);

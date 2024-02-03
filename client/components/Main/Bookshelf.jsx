@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Book from './Book.jsx';
+import Book from '../Book.jsx';
 import Grid from '@mui/material/Grid';
 
 const Bookshelf = ({

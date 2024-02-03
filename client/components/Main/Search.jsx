@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Typography, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import GptDialog from './GptDialog.jsx';
+import GptDialog from '../Dialogs/GptDialog.jsx';
 
 const Search = ({ setHasNewBook, hasNewBook, books }) => {
   const [searchGptOpen, setSearchGptOpen] = useState(false);
@@ -77,12 +77,12 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
   return (
     <>
       <Box
-        display='flex'
-        justifyContent='space-around'
-        alignItems='center'
+        display="flex"
+        justifyContent="space-around"
+        alignItems="center"
         paddingBottom={3}
-        width='40%'
-        margin='0px auto'
+        width="40%"
+        margin="0px auto"
       >
         {/* {<Typography>Add Book to Shelf</Typography>} */}
         <StyledSearch
@@ -93,9 +93,9 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
               borderColor: 'White',
             },
           }}
-          id='searchField'
-          label='Book Title'
-          variant='outlined'
+          id="searchField"
+          label="Book Title"
+          variant="outlined"
           InputLabelProps={{
             sx: {
               color: 'gray',
@@ -110,7 +110,7 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
               color: 'black',
             },
           }}
-          variant='contained'
+          variant="contained"
           onClick={search}
         >
           Add to Shelf
