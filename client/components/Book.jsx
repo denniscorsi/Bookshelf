@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import { Typography, Rating } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -30,6 +31,18 @@ const Book = (props) => {
     hasNewRating,
     setHasNewRating,
   } = props;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // TODO: Does title need to be a useState or can it just be brought in as a normal prop?
+    setTitle(props.title);
+  }, []);
+
+  // Redirects to a full page for this book
+  const openBook = () => {
+    navigate('/book', { state: { bookId: title } }); //TODO: Pass book ID instead 
+  };
 
   // when the actions menu is opened, this stores the title of the connect book into title and opens the actions dialog
   const bookActions = (e) => {
@@ -185,6 +198,7 @@ const Book = (props) => {
           </Typography>
           <img
             src={props.coverImg}
+            onClick={openBook}
             style={{
               boxShadow: '0px 30px 40px -25px rgba(0, 0, 0, 1)',
               border: '3px solid #1d1006',

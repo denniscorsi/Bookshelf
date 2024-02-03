@@ -13,6 +13,7 @@ import NYTBestsellers from './NYTBestsellers.jsx';
 import { createTheme } from '@mui/material/styles';
 import Register from '../Account/Register.jsx';
 import Login from '../Account/Login.jsx';
+import BookPage from '../BookPage.jsx';
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
@@ -98,6 +99,7 @@ const App = () => {
               </>
             }
           />
+          <Route path="/book" element={<BookPage />} />
         </Routes>
       </div>
     </BrowserRouter>
