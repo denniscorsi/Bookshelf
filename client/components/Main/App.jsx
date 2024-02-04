@@ -92,10 +92,10 @@ const App = () => {
                   hasNewRating={hasNewRating}
                   setHasNewRating={setHasNewRating}
                 />
-                <NYTBestsellers
+                {/* <NYTBestsellers
                   hasNewBook={hasNewBook}
                   setHasNewBook={setHasNewBook}
-                />
+                /> */}
               </>
             }
           />
