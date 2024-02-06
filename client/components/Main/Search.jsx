@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { Typography, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import GptDialog from '../Dialogs/GptDialog.jsx';
+import BookSelectorDialog from '../Dialogs/BookSelectorDialog.jsx';
 
 const Search = ({ setHasNewBook, hasNewBook, books }) => {
   const [searchGptOpen, setSearchGptOpen] = useState(false);
@@ -11,6 +12,8 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
   const [title, setTitle] = useState(null);
   const [newTitle, setNewTitle] = useState('??');
   const [fullRec, setfullRec] = useState(null);
+  const [foundBooks, setFoundBooks] = useState([]);
+  const [bookSelectorOpen, setBookSelectorOpen] = useState(false);
 
   // Fetch request for book typed into search field
   const search = () => {
@@ -22,17 +25,18 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
       .then((books) => {
         console.log('Found books', query);
         console.log('books', books);
+        setBookSelectorOpen(true);
+        setFoundBooks(books);
       });
   };
 
   // First show the user the first book. Then show 9 more.
-  const presentOptions = (books) => {
-    
-  };
+  const presentOptions = (books) => {};
 
   const handleClose = () => {
     console.log('closed dialog');
     setSearchGptOpen(false);
+    setBookSelectorOpen(false);
   };
 
   //get all books with a rating of 5, then open gptdialog, and initiate request to server
@@ -134,6 +138,11 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
         fullRec={fullRec}
         hasNewBook={hasNewBook}
         setHasNewBook={setHasNewBook}
+      />
+      <BookSelectorDialog
+        bookSelectorOpen={bookSelectorOpen}
+        foundBooks={foundBooks}
+        handleClose={handleClose}
       />
     </>
   );

@@ -28,9 +28,9 @@ const GptDialog = ({
 
   return (
     <Dialog onClose={handleClose} open={gptOpen}>
-      <Box padding={3} textAlign='center'>
+      <Box padding={3} textAlign="center">
         <Box display={searchingGpt}>
-          <Typography variant='h6' paddingBottom={3}>
+          <Typography variant="h6" paddingBottom={3}>
             Librarian Brainstorming
           </Typography>
           {/* <Typography variant='h6' paddingBottom={3}>
@@ -39,9 +39,9 @@ const GptDialog = ({
           <CircularProgress />
         </Box>
         <Box spacing={2} display={searchingGpt === 'none' ? null : 'none'}>
-          <Typography variant='h5'>We recommend {newTitle}</Typography>
+          <Typography variant="h5">We recommend {newTitle}</Typography>
           <Typography paddingY={3}>{fullRec}</Typography>
-          <Button variant='contained' onClick={() => addBook(newTitle)}>
+          <Button variant="contained" onClick={() => addBook(newTitle)}>
             Add {newTitle} to Shelf
           </Button>
         </Box>
