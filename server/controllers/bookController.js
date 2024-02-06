@@ -1,18 +1,17 @@
+const { PhoneBluetoothSpeakerRounded } = require('@mui/icons-material');
 const Book = require('../models/bookModel');
 const OpenAI = require('openai');
 
 const bookController = {};
 
 // get book data from Google api
-bookController.findBook = (req, res, next) => {
-  const { title } = req.body;
+bookController.findBooks = (req, res, next) => {
+  const { query } = req.query;
 
-  //console.log('REQUEST', req);
-
-  fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
+  fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
     .then((res) => res.json())
-    .then((bookData) => {
-      res.locals.bookData = bookData;
+    .then((booksData) => {
+      res.locals.booksData = booksData;
       return next();
     })
     .catch((err) => {
@@ -27,19 +26,24 @@ bookController.findBook = (req, res, next) => {
 
 // pulls out relevant data from google's api response
 bookController.unpackBookData = (req, res, next) => {
-  const bookData = res.locals.bookData;
-  const books = bookData['items'];
-  const book = books[0];
-  const bookInfo = book.volumeInfo;
-  const title = bookInfo.title;
-  const author = bookInfo.authors[0];
-  let description = bookInfo.description;
-  //shorten description
-  if (description.length > 300) description = description.slice(0, 300) + '...';
+  const { booksData } = res.locals;
+  const booksFull = booksData['items'];
+  const books = [];
+  for (const bookFull of booksFull) {
+    const book = {
+      googleId: bookFull.id,
+      authors: bookFull.volumeInfo.authors,
+      title: bookFull.volumeInfo.title,
+      description: bookFull.volumeInfo.description,
+      coverImg: bookFull.volumeInfo?.imageLinks?.thumbnail, //TODO: deal with fact that there may be a book without an image
+    };
+    books.push(book);
+  }
 
-  const coverImg = bookInfo.imageLinks.thumbnail;
-  const newBook = { title, author, description, coverImg };
-  res.locals.newBook = newBook;
+  // //shorten description
+  // if (description.length > 300) description = description.slice(0, 300) + '...';
+
+  res.locals.books = books;
   return next();
 };
 

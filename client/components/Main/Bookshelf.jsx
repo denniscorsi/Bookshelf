@@ -13,10 +13,12 @@ const Bookshelf = ({
   hasNewRating,
   setHasNewRating,
 }) => {
+  console.log('BOOKS', books);
+
   return (
     <>
       <Grid container spacing={2} padding={2}>
-        {books.map((book) => {
+        {/* {books.map((book) => {
           return (
             <Grid item xs={4} key={Math.random()}>
               <Book
@@ -38,7 +40,7 @@ const Bookshelf = ({
               />
             </Grid>
           );
-        })}
+        })} */}
       </Grid>
     </>
   );

@@ -14,18 +14,20 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
 
   // Fetch request for book typed into search field
   const search = () => {
-    const title = document.getElementById('searchField').value;
-    console.log('Fetching', title);
-    fetch('./books', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title }),
-    }).then((res) => {
-      console.log('Added book', title);
-      setHasNewBook(!hasNewBook);
-    });
+    const query = document.getElementById('searchField').value;
+    const encodedQuery = encodeURIComponent(query);
+    console.log('Fetching', query);
+    fetch(`/books?query=${encodedQuery}`)
+      .then((res) => res.json())
+      .then((books) => {
+        console.log('Found books', query);
+        console.log('books', books);
+      });
+  };
+
+  // First show the user the first book. Then show 9 more.
+  const presentOptions = (books) => {
+    
   };
 
   const handleClose = () => {

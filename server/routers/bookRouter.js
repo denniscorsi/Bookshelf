@@ -1,7 +1,6 @@
 const express = require('express');
 const bookRouter = express.Router();
 
-
 const bookController = require('../controllers/bookController');
 
 //post request for books/gpt/general gets a book recommendation from chatGPT based on all likes
@@ -36,10 +35,10 @@ bookRouter.post('/ratings', bookController.updateRating, (req, res) => {
   res.status(200).end();
 });
 
-//get request to books will load all the books in the database into an object and return that object
-bookRouter.get('/', bookController.loadBooks, (req, res) => {
-  res.status(200).json(res.locals.books);
-});
+// //get request to books will load all the books in the database into an object and return that object
+// bookRouter.get('/', bookController.loadBooks, (req, res) => {
+//   res.status(200).json(res.locals.books);
+// });
 
 //get an array of titles of the NYT best sellers. Take in a param of the name of the list (e.g. 'hardcover-fiction' )
 bookRouter.get(
@@ -51,14 +50,14 @@ bookRouter.get(
   }
 );
 
-//send post request to books endpoint with the title in the body to create a new book in the database
-bookRouter.post(
+// Query google books and return 10 books
+bookRouter.get(
   '/',
-  bookController.findBook,
+  bookController.findBooks,
   bookController.unpackBookData,
-  bookController.addBook,
+  // bookController.addBook,
   (req, res) => {
-    res.status(200).json(res.locals.newBook);
+    res.status(200).json(res.locals.books);
   }
 );
 
