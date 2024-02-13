@@ -10,8 +10,21 @@ const BookSelectorDialog = ({ foundBooks, bookSelectorOpen, handleClose }) => {
   const navigate = useNavigate();
 
   const selectBook = (index) => {
+    const selectedBook = foundBooks[index];
     handleClose();
-    navigate('/book', { state: { bookId: foundBooks[index].title } });
+    saveBook(selectedBook);
+    navigate('/book', { state: { googleId: selectedBook.googleId } });
+  };
+
+  const saveBook = (book) => {
+    console.log('Book sent to saveBook:', book);
+    fetch('/books', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(book),
+    });
   };
 
   return (
@@ -34,10 +47,8 @@ const BookSelectorDialog = ({ foundBooks, bookSelectorOpen, handleClose }) => {
           <img src={foundBooks[0]?.coverImg} />
         </div>
         <Button onClick={() => selectBook(0)}>Yes</Button>
-        <Button>No</Button>
-        {/* <Button onClick={() => handleActionClick('submitNote', note)}>
-          Save
-        </Button> */}
+        <Button onClick={handleClose}>No</Button>
+        {/* TODO: change this to display grid of more options */}
       </Box>
     </Dialog>
   );

@@ -61,6 +61,10 @@ bookRouter.get(
   }
 );
 
+bookRouter.post('/', bookController.addBook, (req, res) => {
+  res.status(200).end();
+});
+
 // add a note to a book in the database
 bookRouter.post('/notes', bookController.addNote, (req, res) => {
   console.log('Book note added:', res.locals.updatedBook);

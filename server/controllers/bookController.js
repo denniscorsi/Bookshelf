@@ -49,22 +49,35 @@ bookController.unpackBookData = (req, res, next) => {
 
 // adds book to mongoDB
 bookController.addBook = (req, res, next) => {
-  const { title, author, description, coverImg } = res.locals.newBook;
+  const { title, authors, googleId, description, coverImg } = req.body;
+  const author = authors[0];
 
-  Book.create({ title, author, description, coverImg }).then(
-    (result) => {
-      console.log('Added book to database:', result);
-      return next();
-    },
-    (err) => {
-      return next({
-        log: 'Error adding book to database',
-        message: {
-          err: 'creating a new book in MongoDB failed in bookController.addBook',
-        },
-      });
-    }
-  );
+  console.log('entered Add Book. body:', req.body);
+
+  Book.findOne({ googleId })
+    .exec()
+    .then((result) => {
+      console.log('done searching, found:', result);
+      if (result) return next();
+      else {
+        Book.create({ title, author, googleId, description, coverImg }).then(
+          (result) => {
+            console.log('Added book to database:', result);
+            return next();
+          },
+          (err) => {
+            console.error(err);
+            return next({
+              log: 'Error adding book to database',
+              message: {
+                err: 'creating a new book in MongoDB failed in bookController.addBook',
+              },
+            });
+          }
+        );
+      }
+    })
+    .catch((err) => console.error(err));
 };
 
 // load all books from mongoDB
