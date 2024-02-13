@@ -65,6 +65,10 @@ bookRouter.post('/', bookController.addBook, (req, res) => {
   res.status(200).end();
 });
 
+bookRouter.get('/:googleId', bookController.findBookById, (req, res) => {
+  res.status(200).json(res.locals.book);
+});
+
 // add a note to a book in the database
 bookRouter.post('/notes', bookController.addNote, (req, res) => {
   console.log('Book note added:', res.locals.updatedBook);

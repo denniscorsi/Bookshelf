@@ -24,6 +24,18 @@ bookController.findBooks = (req, res, next) => {
     });
 };
 
+// Pull book data from our database
+bookController.findBookById = (req, res, next) => {
+  const { googleId } = req.params;
+  Book.findOne({ googleId })
+    .exec()
+    .then((result) => {
+      res.locals.book = result;
+      return next();
+    })
+    .catch((err) => console.error(err));
+};
+
 // pulls out relevant data from google's api response
 bookController.unpackBookData = (req, res, next) => {
   const { booksData } = res.locals;
