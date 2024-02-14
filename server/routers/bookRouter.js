@@ -12,7 +12,7 @@ bookRouter.post(
   (req, res) => {
     const data = {
       title: res.locals.title,
-      fullRec: res.locals.fullRec,
+      justification: res.locals.justification,
     };
     res.status(200).json(data);
   }
@@ -26,7 +26,7 @@ bookRouter.post(
   (req, res) => {
     const data = {
       title: res.locals.title,
-      fullRec: res.locals.fullRec,
+      justification: res.locals.justification,
     };
     res.status(200).json(data);
   }

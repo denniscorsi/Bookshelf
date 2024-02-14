@@ -8,31 +8,36 @@ gptController.findRec = async (req, res, next) => {
   console.log('CHATGPT REQUEST!');
   const { title } = req.body;
 
-  const openai = new OpenAI({
-    apiKey: process.env.GPT_KEY,
-  });
+  try {
+    const openai = new OpenAI({
+      apiKey: process.env.GPT_KEY,
+    });
 
-  const GPTresponse = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
-    messages: [
-      {
-        role: 'system',
-        content: 'You are a helpful librarian. ',
-      },
-      {
-        role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Respond in JSON in the following format: {'title':<title>, 'justification':<why you think I'd like the book>}. Respond with less than 75 words.`,
-      },
-    ],
-    temperature: 1,
-    max_tokens: 120,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  });
+    const GPTresponse = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a helpful librarian. ',
+        },
+        {
+          role: 'user',
+          content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Respond in JSON in the following format: {"title":<title>, "justification":<why you think I'd like the book>}. Respond with less than 75 words.`,
+        },
+      ],
+      temperature: 1,
+      max_tokens: 120,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    });
 
-  res.locals.GPTresponse = GPTresponse;
-  return next();
+    console.log('GPTresponse', GPTresponse);
+    res.locals.GPTresponse = GPTresponse;
+    return next();
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
 };
 
 // gets a recommendation from chatGPT, based on array of likes
@@ -56,7 +61,7 @@ gptController.findGeneralRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the following books: ${favBooks}. Respond in JSON in the following format: {'title':<title>, 'justification':<why you think I'd like the book>}. Respond with less than 80 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the following books: ${favBooks}. Respond in JSON in the following format: {"title":<title>, "justification":<why you think I'd like the book>}. Respond with less than 80 words.`,
       },
     ],
     temperature: 1,
@@ -73,25 +78,21 @@ gptController.findGeneralRec = async (req, res, next) => {
 // pull the title and message out of the chatGPT response
 gptController.unpackRec = (req, res, next) => {
   const { GPTresponse } = res.locals;
+  console.log('entered unpack');
 
-  // this is the actual text response
-  const GPTbody = GPTresponse.choices[0].message.content;
-  console.log('RESPONSE: ', GPTbody);
-  res.locals.fullRec = GPTbody;
-
-  // this finds the word "by" and assumes the title is everything before that
-  // ChatGPT was asked to repond with the title of the book first, so we know that is coming first
-  let title = '';
-  for (let i = 0; i < 100; i++) {
-    if (GPTbody[i] === 'b' && GPTbody[i + 1] === 'y') {
-      title = GPTbody.slice(0, i - 1);
-      break;
-    }
+  try {
+    // this is the actual text response
+    const GPTbody = GPTresponse.choices[0].message.content;
+    console.log('RESPONSE: ', GPTbody);
+    console.log('Type:', typeof GPTbody);
+    const rec = JSON.parse(GPTbody);
+    console.log('rec:', rec);
+    res.locals.title = rec.title;
+    res.locals.justification = rec.justification;
+    next();
+  } catch (err) {
+    console.error(err.message);
   }
-  console.log('TITLE:', title);
-
-  res.locals.title = title;
-  next();
 };
 
 module.exports = gptController;
