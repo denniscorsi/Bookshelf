@@ -37,8 +37,6 @@ gptController.findRec = async (req, res, next) => {
 
 // gets a recommendation from chatGPT, based on array of likes
 gptController.findGeneralRec = async (req, res, next) => {
-  // console.log('STOPPIN GENERAL REC REQUEST');
-  // return next('not yet!');
   console.log('CHATGPT REQUEST!');
   //favBooks will be an array of books the user likes.
   let { favBooks } = req.body;
@@ -58,7 +56,7 @@ gptController.findGeneralRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the following books: ${favBooks}. Begin your response with just the name of the book. Then explain why I'd enjoy this book based on the books I liked. Respond with less than 90 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the following books: ${favBooks}. Respond in JSON in the following format: {'title':<title>, 'justification':<why you think I'd like the book>}. Respond with less than 80 words.`,
       },
     ],
     temperature: 1,
