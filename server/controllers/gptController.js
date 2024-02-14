@@ -78,13 +78,11 @@ gptController.findGeneralRec = async (req, res, next) => {
 // pull the title and message out of the chatGPT response
 gptController.unpackRec = (req, res, next) => {
   const { GPTresponse } = res.locals;
-  console.log('entered unpack');
 
   try {
     // this is the actual text response
     const GPTbody = GPTresponse.choices[0].message.content;
-    console.log('RESPONSE: ', GPTbody);
-    console.log('Type:', typeof GPTbody);
+
     const rec = JSON.parse(GPTbody);
     console.log('rec:', rec);
     res.locals.title = rec.title;
