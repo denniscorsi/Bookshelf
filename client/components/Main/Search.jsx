@@ -60,7 +60,7 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
       .then((data) => {
         console.log('data', data); //made it to here, but recommendation doesn't show up. loading circle keeps spinning
         setNewTitle(data.title);
-        setfullRec(data.fullRec);
+        setfullRec(data.justification);
         setSearchingGptGen('none');
       });
   };
