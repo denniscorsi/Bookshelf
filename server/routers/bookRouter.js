@@ -1,18 +1,18 @@
 const express = require('express');
 const bookRouter = express.Router();
 
-
 const bookController = require('../controllers/bookController');
+const gptController = require('../controllers/gptController');
 
 //post request for books/gpt/general gets a book recommendation from chatGPT based on all likes
 bookRouter.post(
   '/gpt/general',
-  bookController.findGeneralRec,
-  bookController.unpackRec,
+  gptController.findGeneralRec,
+  gptController.unpackRec,
   (req, res) => {
     const data = {
       title: res.locals.title,
-      fullRec: res.locals.fullRec,
+      justification: res.locals.justification,
     };
     res.status(200).json(data);
   }
@@ -21,12 +21,12 @@ bookRouter.post(
 //post request for books/gpt gets a book recommendation from chatGPT based on "find similar"
 bookRouter.post(
   '/gpt',
-  bookController.findRec,
-  bookController.unpackRec,
+  gptController.findRec,
+  gptController.unpackRec,
   (req, res) => {
     const data = {
       title: res.locals.title,
-      fullRec: res.locals.fullRec,
+      justification: res.locals.justification,
     };
     res.status(200).json(data);
   }
