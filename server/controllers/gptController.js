@@ -5,7 +5,6 @@ const gptController = {};
 
 // gets a recommendation from chatGPT, based on a single book
 gptController.findRec = async (req, res, next) => {
-
   console.log('CHATGPT REQUEST!');
   const { title } = req.body;
 
@@ -22,7 +21,7 @@ gptController.findRec = async (req, res, next) => {
       },
       {
         role: 'user',
-        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Begin your response with just the title of the book. Then explain why I'd like this book based on enjoying ${title} Respond with less than 65 words.`,
+        content: `Please recommend one book that I would like, knowing that I liked the book "${title}". Respond in JSON in the following format: {'title':<title>, 'justification':<why you think I'd like the book>}. Respond with less than 75 words.`,
       },
     ],
     temperature: 1,
