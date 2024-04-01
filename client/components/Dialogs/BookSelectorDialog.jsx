@@ -1,10 +1,10 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Box } from '@mui/system';
-import { Typography, Dialog } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Box } from "@mui/system";
+import { Typography, Dialog } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const BookSelectorDialog = ({ foundBooks, bookSelectorOpen, handleClose }) => {
   const navigate = useNavigate();
@@ -13,17 +13,18 @@ const BookSelectorDialog = ({ foundBooks, bookSelectorOpen, handleClose }) => {
     const selectedBook = foundBooks[index];
     handleClose();
     saveBook(selectedBook);
-    navigate('/book', { state: { googleId: selectedBook.googleId } });
+    navigate(`/book/${selectedBook.googleId}`);
+    // navigate(`/book/${selectedBook.googleId}`, { state: { googleId: selectedBook.googleId } });
   };
 
   const saveBook = (book) => {
-    console.log('Book sent to saveBook:', book);
-    fetch('/books', {
-      method: 'POST',
+    console.log("Book sent to saveBook:", book);
+    fetch("/books", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(book),
+      body: JSON.stringify(book)
     });
   };
 
@@ -35,8 +36,8 @@ const BookSelectorDialog = ({ foundBooks, bookSelectorOpen, handleClose }) => {
         display="flex"
         flexDirection="column"
         sx={{
-          border: '10px solid #0c869e',
-          backgroundColor: '#DADAD6',
+          border: "10px solid #0c869e",
+          backgroundColor: "#DADAD6"
         }}
       >
         <Typography>Add Book</Typography>

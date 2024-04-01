@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
   Route,
   Link,
-  useNavigate,
-} from 'react-router-dom';
-import Header from './Header.jsx';
-import Search from './Search.jsx';
-import Bookshelf from './Bookshelf.jsx';
-import NYTBestsellers from './NYTBestsellers.jsx';
-import { createTheme } from '@mui/material/styles';
-import Register from '../Account/Register.jsx';
-import Login from '../Account/Login.jsx';
-import BookPage from '../BookPage.jsx';
+  useNavigate
+} from "react-router-dom";
+import Header from "./Header.jsx";
+import Search from "./Search.jsx";
+import Bookshelf from "./Bookshelf.jsx";
+import NYTBestsellers from "./NYTBestsellers.jsx";
+import { createTheme } from "@mui/material/styles";
+import Register from "../Account/Register.jsx";
+import Login from "../Account/Login.jsx";
+import BookPage from "../BookPage.jsx";
 
 const App = () => {
   const [books, setBooks] = useState([{}]);
@@ -23,11 +23,11 @@ const App = () => {
   const [hasNewRating, setHasNewRating] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  console.log('rendering App');
-  console.log('numNotes:', numNotes);
+  console.log("rendering App");
+  console.log("numNotes:", numNotes);
 
   const checkExistingSession = () => {
-    fetch('/auth/session')
+    fetch("/auth/session")
       .then((res) => res.json())
       .then((session) => setIsLoggedIn(session));
   };
@@ -35,17 +35,17 @@ const App = () => {
   useEffect(checkExistingSession, []);
 
   useEffect(() => {
-    console.log('Running useEffect');
-    fetch('/books')
+    console.log("Running useEffect");
+    fetch("/books")
       .then((res) => res.json())
       .then((bookArr) => {
-        console.log('Got new books');
+        console.log("Got new books");
         console.log(bookArr);
         setBooks(bookArr);
       })
       .catch();
     return () => {
-      console.log('Ran cleanup function');
+      console.log("Ran cleanup function");
     };
   }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating]);
 
@@ -99,7 +99,7 @@ const App = () => {
               </>
             }
           />
-          <Route path="/book" element={<BookPage />} />
+          <Route path="/book/:googleId" element={<BookPage />} />
         </Routes>
       </div>
     </BrowserRouter>

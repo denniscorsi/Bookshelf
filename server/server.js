@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const bookRouter = require("./routers/bookRouter");
 const authRouter = require("./routers/authRouter");
+const shelvesRouter = require("./routers/shelvesRouter");
 require("dotenv").config();
 
 const app = express();
@@ -21,11 +22,11 @@ app.get("/", (req, res) => {
 
 app.use("/books", bookRouter);
 app.use("/auth", authRouter);
+app.use("/shelves", shelvesRouter);
 
 // serve static pages
 app.use(express.static(path.join(__dirname, "../build")));
 app.use("/build", express.static(path.join(__dirname, "../build")));
-
 
 // Fallback route since using React Router
 app.get("*", (req, res) => {

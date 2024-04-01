@@ -47,7 +47,8 @@ module.exports = {
       "/book": "http://localhost:3000",
       "/books/nyt/*": "http://localhost:3000",
       "/books/nyt/hardcover-fiction": "http://localhost:3000",
-      "/auth": "http://localhost:3000"
+      "/auth": "http://localhost:3000",
+      "/shelves": "http://localhost:3000"
     },
     historyApiFallback: true
   }
