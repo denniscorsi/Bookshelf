@@ -7,8 +7,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Typography, Box, Divider, Slide } from "@mui/material";
 
-//TODO: rebuild this (it was copy and pasted and not edited yet).
-
 const AddToShelfDialog = ({ handleClose, open, handleClick }) => {
   const [shelfNames, setShelfNames] = useState([]);
 
@@ -20,7 +18,7 @@ const AddToShelfDialog = ({ handleClose, open, handleClick }) => {
           <ListItem>
             <ListItemButton
               onClick={() => {
-                handleClick("addNote");
+                handleClick(shelf);
               }}
             >
               <Typography variant="h5">{shelf}</Typography>

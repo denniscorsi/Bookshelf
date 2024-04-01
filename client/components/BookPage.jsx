@@ -20,6 +20,17 @@ const BookPage = () => {
   const handleClose = () => setAddDialogOpen(false);
   const handleOpen = () => setAddDialogOpen(true);
 
+  const addToShelf = (shelf) => {
+    fetch("/shelves", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({ shelf, googleId })
+    });
+    handleClose();
+  };
+
   useEffect(() => {
     fetch(`/books/${googleId}`)
       .then((res) => res.json())
@@ -49,7 +60,7 @@ const BookPage = () => {
       <AddToShelfDialog
         handleClose={handleClose}
         open={addDialogOpen}
-        handleClick={console.log}
+        handleClick={addToShelf}
       />
     </>
   );
