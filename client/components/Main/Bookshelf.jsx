@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import Book from '../Book.jsx';
-import Grid from '@mui/material/Grid';
+import React, { useState } from "react";
+import Book from "../Book.jsx";
+import Grid from "@mui/material/Grid";
 
 const Bookshelf = ({
+  activeShelf,
   books,
   setHasDeletedBook,
   hasDeletedBook,
@@ -11,9 +12,26 @@ const Bookshelf = ({
   numNotes,
   setNumNotes,
   hasNewRating,
-  setHasNewRating,
+  setHasNewRating
 }) => {
-  console.log('BOOKS', books);
+
+  // add a route with a param for shelfname 
+  useEffect(() => {
+    console.log("Running useEffect");
+    fetch("/books")
+      .then((res) => res.json())
+      .then((bookArr) => {
+        console.log("Got new books");
+        console.log(bookArr);
+        setBooks(bookArr);
+      })
+      .catch();
+    return () => {
+      console.log("Ran cleanup function");
+    };
+  }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating]);
+
+
 
   return (
     <>

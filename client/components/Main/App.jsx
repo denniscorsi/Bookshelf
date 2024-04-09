@@ -16,15 +16,16 @@ import Login from "../Account/Login.jsx";
 import BookPage from "../BookPage.jsx";
 
 const App = () => {
-  const [books, setBooks] = useState([{}]);
+  // const [books, setBooks] = useState([{}]);
   const [hasNewBook, setHasNewBook] = useState(false);
   const [hasDeletedBook, setHasDeletedBook] = useState(false);
   const [numNotes, setNumNotes] = useState(0);
   const [hasNewRating, setHasNewRating] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [shelfButtons, setShelfButtons] = useState([]);
+  const [activeShelf, setActiveShelf] = useState(null);
 
-  console.log("rendering App");
-  console.log("numNotes:", numNotes);
+  const navigate = useNavigate();
 
   const checkExistingSession = () => {
     fetch("/auth/session")
@@ -32,7 +33,30 @@ const App = () => {
       .then((session) => setIsLoggedIn(session));
   };
 
+  const openShelf = (shelfName) => {
+    setActiveShelf(shelfName);
+    navigate("/shelf");
+  };
+
+  const fetchUserShelves = () => {
+    fetch("/shelves")
+      .then((res) => res.json())
+      .then((shelfNames) => {
+        const shelfButtonsTemp = shelfNames.map((shelf) => (
+          <Button
+            onClick={() => {
+              openShelf(shelf);
+            }}
+          >
+            <Typography variant="h5">{shelf}</Typography>
+          </Button>
+        ));
+        setShelfButtons(shelfButtonsTemp);
+      });
+  };
+
   useEffect(checkExistingSession, []);
+  useEffect(fetchUserShelves, []);
 
   useEffect(() => {
     console.log("Running useEffect");
@@ -62,7 +86,7 @@ const App = () => {
         hasNewBook={hasNewBook}
         books={books}
       />
-
+      {shelfButtons}
       <div id="main">
         <Routes>
           <Route
@@ -82,7 +106,8 @@ const App = () => {
             element={
               <>
                 <Bookshelf
-                  books={books}
+                  activeShelf={activeShelf}
+                  // books={books}
                   setHasNewBook={setHasNewBook}
                   hasNewBook={hasNewBook}
                   setHasDeletedBook={setHasDeletedBook}
