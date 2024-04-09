@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Paper from '@mui/material/Paper';
-import { Typography, Rating } from '@mui/material';
-import Button from '@mui/material/Button';
-import { Box } from '@mui/system';
-import ActionsDialog from './Dialogs/ActionsDialog.jsx';
-import GptDialog from './Dialogs/GptDialog.jsx';
-import NoteDialog from './Dialogs/NoteDialog.jsx';
-import NotesRoundedIcon from '@mui/icons-material/NotesRounded';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { styled } from '@mui/material/styles';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import { Typography, Rating } from "@mui/material";
+import Button from "@mui/material/Button";
+import { Box } from "@mui/system";
+import ActionsDialog from "./Dialogs/ActionsDialog.jsx";
+import GptDialog from "./Dialogs/GptDialog.jsx";
+import NoteDialog from "./Dialogs/NoteDialog.jsx";
+import NotesRoundedIcon from "@mui/icons-material/NotesRounded";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 const Book = (props) => {
   const [actionsOpen, setActionsOpen] = useState(false);
   const [gptOpen, setGptOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   const [title, setTitle] = useState(null);
-  const [newTitle, setNewTitle] = useState('??');
+  const [newTitle, setNewTitle] = useState("??");
   const [fullRec, setfullRec] = useState(null);
   const [searchingGpt, setSearchingGpt] = useState(null);
 
@@ -29,7 +29,7 @@ const Book = (props) => {
     setNumNotes,
     numNotes,
     hasNewRating,
-    setHasNewRating,
+    setHasNewRating
   } = props;
 
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const Book = (props) => {
 
   // Redirects to a full page for this book
   const openBook = () => {
-    navigate('/book', { state: { bookId: title } }); //TODO: Pass book ID instead 
+    navigate("/book", { state: { bookId: title } }); //TODO: Pass book ID instead
   };
 
   // when the actions menu is opened, this stores the title of the connect book into title and opens the actions dialog
@@ -54,7 +54,7 @@ const Book = (props) => {
 
   //closes any opened dialog boxes
   const handleClose = () => {
-    console.log('closed dialog');
+    console.log("closed dialog");
     setActionsOpen(false);
     setGptOpen(false);
     setNoteOpen(false);
@@ -63,73 +63,75 @@ const Book = (props) => {
   // Executes an action based on the button clicked in the action menu
   const handleActionClick = (action, note) => {
     switch (action) {
-      case 'addNote':
+      case "addNote":
         setNoteOpen(true);
         break;
-      case 'submitNote':
+      case "submitNote":
         //send post request to server on books/notes route
         //body will have title of book and the note
-        fetch('/books/notes', {
-          method: 'POST',
+        fetch("/books/notes", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({ title, note }),
+          body: JSON.stringify({ title, note })
         })
           .then((res) => res.json())
           .then((update) => {
-            console.log('Added note:', update);
-            console.log('NumNotes:', numNotes);
+            console.log("Added note:", update);
+            console.log("NumNotes:", numNotes);
             setNumNotes(update);
             setNoteOpen(false);
           });
         break;
-      case 'remove':
-        fetch('/books', {
-          method: 'DELETE',
+      case "remove": // TODO: Change this not to remove book from database, but from user's shelf 
+        fetch("/books", {
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({ title }),
+          body: JSON.stringify({ title })
         }).then(() => {
           setHasDeletedBook(!hasDeletedBook);
         });
         break;
-      case 'favorite':
+      case "favorite":
         break;
-      case 'recommend':
+      case "recommend":
         //display a loading animation screen
         setGptOpen(true);
-        fetch('/books/gpt', {
-          method: 'POST',
+        fetch("/books/gpt", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({ title }),
+          body: JSON.stringify({ title })
         })
           .then((response) => {
-            console.log('recieved response:', response);
+            console.log("recieved response:", response);
             return response.json();
           })
           .then((recData) => {
-            console.log('recData post-parse: ', recData);
+            console.log("recData post-parse: ", recData);
             const { title, fullRec } = recData;
-            console.log('DATA FROM RESPONSE');
-            console.log('Recommended Title:', title);
-            console.log('Full Rec:', fullRec);
+            console.log("DATA FROM RESPONSE");
+            console.log("Recommended Title:", title);
+            console.log("Full Rec:", fullRec);
             //stop loading component
-            setSearchingGpt('none');
+            setSearchingGpt("none");
             //display book data in dialog
             setNewTitle(title);
             setfullRec(fullRec);
             //do a get request to load that book to the page
           });
         break;
-      case 'amazon':
-        let titleCleaned = title.replaceAll(' ', '+');
-        const url = ' https://www.amazon.com/s?k=' + titleCleaned;
-        window.open(url, '_blank');
+      case "amazon":
+        let titleCleaned = title.replaceAll(" ", "+");
+        const url = " https://www.amazon.com/s?k=" + titleCleaned;
+        window.open(url, "_blank");
         break;
+      case "move":
+        console.log("MOVE"); // TODO: move book to another shelf
     }
     console.log(action);
     setActionsOpen(false);
@@ -142,34 +144,34 @@ const Book = (props) => {
       event.target.parentElement.parentElement.parentElement.firstChild
         .innerText;
     console.log(title, rating);
-    fetch('/books/ratings', {
-      method: 'POST',
+    fetch("/books/ratings", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ title, rating }),
+      body: JSON.stringify({ title, rating })
     }).then(setHasNewRating(!hasNewRating));
   };
 
   //creates custom syling for rating component
   const StyledRating = styled(Rating)({
-    '& .MuiRating-iconFilled': {
-      color: 'rgb(12, 134, 158)',
-    },
+    "& .MuiRating-iconFilled": {
+      color: "rgb(12, 134, 158)"
+    }
   });
 
   // custom styling for book card
   const StyledPaper = styled(Paper)({
-    border: '5px solid #0c869e',
-    borderRadius: '10px',
-    '&:hover': {
+    border: "5px solid #0c869e",
+    borderRadius: "10px",
+    "&:hover": {
       // border: '5px solid #033f4b',
-    },
+    }
   });
 
   // custom syling for outer box of book card
   const StyledBox = styled(Box)({
-    borderRadius: '7px',
+    borderRadius: "7px"
   });
 
   return (
@@ -182,11 +184,11 @@ const Book = (props) => {
         alignItems="center"
         justifyContent="space-between"
         sx={{
-          bgcolor: '#e9c6ad',
-          '&:hover': {
-            backgroundColor: '#DADAD6',
+          bgcolor: "#e9c6ad",
+          "&:hover": {
+            backgroundColor: "#DADAD6"
           },
-          height: '600px',
+          height: "600px"
         }}
       >
         <Box display="flex" flexDirection="column" alignItems="center">
@@ -200,10 +202,10 @@ const Book = (props) => {
             src={props.coverImg}
             onClick={openBook}
             style={{
-              boxShadow: '0px 30px 40px -25px rgba(0, 0, 0, 1)',
-              border: '3px solid #1d1006',
-              height: '200px',
-              width: 'auto',
+              boxShadow: "0px 30px 40px -25px rgba(0, 0, 0, 1)",
+              border: "3px solid #1d1006",
+              height: "200px",
+              width: "auto"
             }}
           />
           <Box
@@ -237,8 +239,8 @@ const Book = (props) => {
         <Box paddingBottom={2}>
           <Button
             sx={{
-              color: '#0c869e',
-              borderColor: '0c869e',
+              color: "#0c869e",
+              borderColor: "0c869e"
             }}
             variant="outlined"
             onClick={bookActions}
