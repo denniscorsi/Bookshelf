@@ -2,12 +2,14 @@ const express = require("express");
 const shelvesRouter = express.Router();
 
 const shelvesController = require("../controllers/shelvesController");
+const userController = require("../controllers/userController");
 
 shelvesRouter.get("/", shelvesController.getUserShelves, (req, res) => {
   res.status(200).json(res.locals.shelves);
 });
 
-shelvesRouter.post("/", shelvesController.addToShelf, (req, res) => {
+// This adds a book to a shelf, then adds that book to a user's bookData 
+shelvesRouter.post("/", shelvesController.addToShelf, userController.intializeBookDate, (req, res) => {
   res.status(200).end();
 });
 

@@ -33,6 +33,8 @@ shelvesController.addToShelf = async (req, res, next) => {
     console.log({ shelves });
 
     await User.findOneAndUpdate({ username }, { shelves });
+
+    res.locals.foundUser = foundUser;
     next();
   } else {
     return next("No User");

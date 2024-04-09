@@ -41,6 +41,11 @@ bookRouter.post('/ratings', bookController.updateRating, (req, res) => {
 //   res.status(200).json(res.locals.books);
 // });
 
+// return all books on a given shelf
+bookRouter.get('/:shelfName', authController.validateSession, bookController.loadBooksFromShelf, (req, res) => {
+  res.status(200).json(res.locals.books);
+});
+
 //get an array of titles of the NYT best sellers. Take in a param of the name of the list (e.g. 'hardcover-fiction' )
 bookRouter.get(
   '/nyt/:category',
