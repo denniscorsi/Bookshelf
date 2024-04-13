@@ -8,7 +8,7 @@ userController.intializeBookData = async (req, res, next) => {
   const { googleId } = req.body;
 
   // user object is already on res.locals.foundUser
-  const { userBookData } = res.locals.foundUser;
+  const { userBookData } = res.locals.user;
 
   // First check if book already exists in bookData
   if (userBookData[googleId]) return next();
@@ -24,6 +24,20 @@ userController.intializeBookData = async (req, res, next) => {
   await User.findOneAndUpdate({ username }, { userBookData });
 
   return next();
+};
+
+userController.loadUser = async (req, res, next) => {
+  const { username } = req.cookies;
+
+  const user = await User.findOne({ username });
+  if (!user) {
+    return next({
+      log: "Unable to find user in database in loadUser middleware"
+    });
+  } else {
+    res.locals.user = user;
+    return next();
+  }
 };
 
 module.exports = userController;

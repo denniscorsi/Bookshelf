@@ -21,12 +21,11 @@ shelvesController.getUserShelves = async (req, res, next) => {
 shelvesController.addToShelf = async (req, res, next) => {
   const { username } = req.cookies;
   const { shelf, googleId } = req.body;
-  console.log({ shelf });
 
-  const foundUser = await User.findOne({ username });
-  if (foundUser) {
-    const shelves = foundUser.shelves;
-    console.log({ foundUser });
+  const { user } = res.locals;
+  if (user) {
+    const shelves = user.shelves;
+    console.log({ user });
     console.log({ shelves });
     const selectedShelf = shelves.find((shelve) => shelve.name === shelf);
     selectedShelf.books.push(googleId);
@@ -34,8 +33,7 @@ shelvesController.addToShelf = async (req, res, next) => {
 
     await User.findOneAndUpdate({ username }, { shelves });
 
-    res.locals.foundUser = foundUser;
-    next();
+    return next();
   } else {
     return next("No User");
   }

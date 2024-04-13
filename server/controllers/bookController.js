@@ -130,6 +130,7 @@ bookController.loadBooksFromShelf = async (req, res, next) => {
   // Can I build a filter than matches any of a list of googleIds?
 
   Book.find({}).then(
+    // TODO: this filter
     (books) => {
       books.reverse();
       res.locals.books = books;
@@ -164,9 +165,12 @@ bookController.deleteBook = (req, res, next) => {
   return next();
 };
 
+// TODO: update to put in user's data
 // adds a note to a book
 bookController.addNote = (req, res, next) => {
+  const { user } = res.locals;
   const { title, note } = req.body;
+
   Book.findOneAndUpdate({ title }, { note }, { returnDocument: "after" }).then(
     (updatedBook) => {
       res.locals.updatedBook = updatedBook;
@@ -183,6 +187,8 @@ bookController.addNote = (req, res, next) => {
   );
 };
 
+// TODO: update to put in user's data
+// TODO: then update total on book itself
 // updates rating on a book
 bookController.updateRating = (req, res, next) => {
   const { title, rating } = req.body;
@@ -208,10 +214,7 @@ bookController.getNYTList = (req, res, next) => {
   console.log("CATEGORY:", category);
   const key = "aYY0LRbzKdAHRUQnGUEkBzb5JqMXxWr5";
   const url =
-    "https://api.nytimes.com/svc/books/v3/lists/current/" +
-    category +
-    ".json?api-key=" +
-    key;
+    "https://api.nytimes.com/svc/books/v3/lists/current/" + category + ".json?api-key=" + key;
   fetch(url)
     .then((response) => response.json())
     .then((data) => {

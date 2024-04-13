@@ -11,6 +11,7 @@ shelvesRouter.get("/", shelvesController.getUserShelves, (req, res) => {
 // This adds a book to a shelf, then adds that book to a user's bookData
 shelvesRouter.post(
   "/",
+  userController.loadUser,
   shelvesController.addToShelf,
   userController.intializeBookData,
   (req, res) => {
