@@ -16,7 +16,7 @@ const userSchema = new Schema({
   //   },
   //   KFIJE: {}
   // },
-  userBookData: {}, // TODO: when add book to shelf, create a key for it in bookData.
+  userBookData: {}, // TODO: add this field to users already in database
   shelves: {
     type: [],
     default: [
