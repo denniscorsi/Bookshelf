@@ -8,9 +8,14 @@ shelvesRouter.get("/", shelvesController.getUserShelves, (req, res) => {
   res.status(200).json(res.locals.shelves);
 });
 
-// This adds a book to a shelf, then adds that book to a user's bookData 
-shelvesRouter.post("/", shelvesController.addToShelf, userController.intializeBookDate, (req, res) => {
-  res.status(200).end();
-});
+// This adds a book to a shelf, then adds that book to a user's bookData
+shelvesRouter.post(
+  "/",
+  shelvesController.addToShelf,
+  userController.intializeBookData,
+  (req, res) => {
+    res.status(200).end();
+  }
+);
 
 module.exports = shelvesRouter;
