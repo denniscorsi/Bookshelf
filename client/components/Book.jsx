@@ -63,6 +63,11 @@ const Book = (props) => {
   // Executes an action based on the button clicked in the action menu
   const handleActionClick = (action, note) => {
     switch (action) {
+      // TODO: consider notes. If want to keep this, will need to add a new attribute to User model that holds notes.
+      // While at it, will need to store ratings somehow too. And maybe reviews. 
+      // So I need to figure out how to connect user specific data with a book
+      // Maybe an object with the googleId as the key, and an object with user specific data as the value
+      // User specific data includes note, rating, review
       case "addNote":
         setNoteOpen(true);
         break;

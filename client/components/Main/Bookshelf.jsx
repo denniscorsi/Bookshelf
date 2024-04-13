@@ -14,11 +14,11 @@ const Bookshelf = ({
   hasNewRating,
   setHasNewRating
 }) => {
+  // TODO: I should use a custom hook or useQuery to cache the books on the shelf so if I click back and forth between shelves it doesnt have to refetch books each time
+  const [books, setBooks] = useEffect([]);
 
-  // add a route with a param for shelfname 
   useEffect(() => {
-    console.log("Running useEffect");
-    fetch("/books")
+    fetch(`/books/${activeShelf}`)
       .then((res) => res.json())
       .then((bookArr) => {
         console.log("Got new books");
@@ -31,12 +31,10 @@ const Bookshelf = ({
     };
   }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating]);
 
-
-
   return (
     <>
       <Grid container spacing={2} padding={2}>
-        {/* {books.map((book) => {
+        {books.map((book) => {
           return (
             <Grid item xs={4} key={Math.random()}>
               <Book
@@ -58,7 +56,7 @@ const Bookshelf = ({
               />
             </Grid>
           );
-        })} */}
+        })}
       </Grid>
     </>
   );
