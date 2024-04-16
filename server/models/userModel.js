@@ -16,7 +16,7 @@ const userSchema = new Schema({
   //   },
   //   KFIJE: {}
   // },
-  userBookData: {}, // TODO: add this field to users already in database
+  userBookData: {}, 
   shelves: {
     type: [],
     default: [
