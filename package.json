@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "tbd",
   "scripts": {
-    "start": "nodemon server/server.js",
-    "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack serve & nodemon server/server.js"
+    "start": "node server/server.js",
+    "dev": "vite & nodemon server/server.js",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "author": "Dennis Corsi",
   "license": "ISC",
@@ -26,6 +28,8 @@
     "react-router-dom": "^6.21.3"
   },
   "devDependencies": {
+    "vite": "^5.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-react": "^7.22.15",
