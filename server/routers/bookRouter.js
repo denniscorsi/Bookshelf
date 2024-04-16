@@ -4,6 +4,7 @@ const bookRouter = express.Router();
 const bookController = require("../controllers/bookController");
 const gptController = require("../controllers/gptController");
 const userController = require("../controllers/userController");
+const authController = require("../controllers/authController");
 
 //post request for books/gpt/general gets a book recommendation from chatGPT based on all likes
 bookRouter.post(
@@ -39,7 +40,7 @@ bookRouter.post("/ratings", bookController.updateRating, (req, res) => {
 
 // return all books on a given shelf
 bookRouter.get(
-  "/:shelfName",
+  "/shelf/:shelfName",
   authController.validateSession,
   bookController.loadBooksFromShelf,
   (req, res) => {

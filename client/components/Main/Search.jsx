@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { Typography, Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import GptDialog from '../Dialogs/GptDialog.jsx';
-import BookSelectorDialog from '../Dialogs/BookSelectorDialog.jsx';
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { Typography, Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import GptDialog from "../Dialogs/GptDialog.jsx";
+import BookSelectorDialog from "../Dialogs/BookSelectorDialog.jsx";
 
-const Search = ({ setHasNewBook, hasNewBook, books }) => {
+const Search = ({ setHasNewBook, hasNewBook }) => {
   const [searchGptOpen, setSearchGptOpen] = useState(false);
   const [searchingGptGen, setSearchingGptGen] = useState(null);
   const [title, setTitle] = useState(null);
-  const [newTitle, setNewTitle] = useState('??');
+  const [newTitle, setNewTitle] = useState("??");
   const [fullRec, setfullRec] = useState(null);
   const [foundBooks, setFoundBooks] = useState([]);
   const [bookSelectorOpen, setBookSelectorOpen] = useState(false);
 
   // Fetch request for book typed into search field
   const search = () => {
-    const query = document.getElementById('searchField').value;
+    const query = document.getElementById("searchField").value;
     const encodedQuery = encodeURIComponent(query);
-    console.log('Fetching', query);
+    console.log("Fetching", query);
     fetch(`/books?query=${encodedQuery}`)
       .then((res) => res.json())
       .then((books) => {
-        console.log('Found books', query);
-        console.log('books', books);
+        console.log("Found books", query);
+        console.log("books", books);
         setBookSelectorOpen(true);
         setFoundBooks(books);
       });
@@ -34,7 +34,7 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
   const presentOptions = (books) => {};
 
   const handleClose = () => {
-    console.log('closed dialog');
+    console.log("closed dialog");
     setSearchGptOpen(false);
     setBookSelectorOpen(false);
   };
@@ -49,35 +49,35 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
     });
     console.log(favBooks);
     setSearchGptOpen(true);
-    fetch('/books/gpt/general', {
-      method: 'POST',
+    fetch("/books/gpt/general", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ favBooks }),
+      body: JSON.stringify({ favBooks })
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data); //made it to here, but recommendation doesn't show up. loading circle keeps spinning
+        console.log("data", data); //made it to here, but recommendation doesn't show up. loading circle keeps spinning
         setNewTitle(data.title);
         setfullRec(data.justification);
-        setSearchingGptGen('none');
+        setSearchingGptGen("none");
       });
   };
 
   //adds styling to textfield
   const StyledSearch = styled(TextField)({
-    '& label.Mui-focused': {
-      color: 'orange',
+    "& label.Mui-focused": {
+      color: "orange"
     },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'white',
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white"
       },
-      '&:hover fieldset': {
-        borderColor: 'orange',
-      },
-    },
+      "&:hover fieldset": {
+        borderColor: "orange"
+      }
+    }
   });
 
   return (
@@ -93,28 +93,28 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
         {/* {<Typography>Add Book to Shelf</Typography>} */}
         <StyledSearch
           sx={{
-            color: 'white',
+            color: "white",
             input: {
-              color: 'orange',
-              borderColor: 'White',
-            },
+              color: "orange",
+              borderColor: "White"
+            }
           }}
           id="searchField"
           label="Book Title"
           variant="outlined"
           InputLabelProps={{
             sx: {
-              color: 'gray',
-            },
+              color: "gray"
+            }
           }}
         />
         <Button
           sx={{
-            backgroundColor: '#0c869e',
-            '&:hover': {
-              backgroundColor: 'orange',
-              color: 'black',
-            },
+            backgroundColor: "#0c869e",
+            "&:hover": {
+              backgroundColor: "orange",
+              color: "black"
+            }
           }}
           variant="contained"
           onClick={search}
@@ -123,7 +123,7 @@ const Search = ({ setHasNewBook, hasNewBook, books }) => {
         </Button>
         <Button
           sx={{
-            color: 'orange',
+            color: "orange"
           }}
           onClick={gatherFavs}
         >

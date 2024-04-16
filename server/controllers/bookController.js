@@ -112,11 +112,12 @@ bookController.loadBooks = (req, res, next) => {
   );
 };
 
-
-// load all books from a given shelf 
+// load all books from a given shelf
 bookController.loadBooksFromShelf = async (req, res, next) => {
   const { shelfName } = req.params;
   const { username } = res.locals;
+
+  console.log("Attempting to load books for shelf:", shelfName);
 
   // Get list of googleIds of books from shelf in User
   const user = await User.findOne({ username });
@@ -124,25 +125,23 @@ bookController.loadBooksFromShelf = async (req, res, next) => {
   const selectedShelf = userShelves.find((shelf) => shelf.name === shelfName);
   const googleIds = selectedShelf.books; // this is an array of googleIds
 
- 
   // Then get each of those book objects from Book
-
-  Book.find({ googleId: { $in: googleIds } }).then(
-    (books) => {
+  console.log("Searching for the following books:", googleIds);
+  Book.find({ googleId: { $in: googleIds } })
+    .then((books) => {
       books.reverse();
       res.locals.books = books;
       console.log("Loaded books in middleware");
       return next();
-    },
-    (err) => {
+    })
+    .catch((err) => {
       return next({
         log: "Error loading books from database",
         message: {
           err: "Loading all books from MongoDB failed in bookController.loadBooks"
         }
       });
-    }
-  );
+    });
 };
 
 // TODO: change this to delete from a user's books

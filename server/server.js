@@ -12,21 +12,18 @@ const app = express();
 mongoose.connect(process.env.MONGO_URI);
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// serve static pages
+app.use(express.static("dist"));
 app.get("/", (req, res) => {
-  const index = path.join(__dirname, "../index.html");
-  console.log("getting file from root", index);
-  return res.status(200).sendFile(index);
+  return res.status(200).sendFile("dist/index.html");
 });
 
 app.use("/books", bookRouter);
 app.use("/auth", authRouter);
 app.use("/shelves", shelvesRouter);
-
-// serve static pages
-app.use(express.static(path.join(__dirname, "../build")));
-app.use("/build", express.static(path.join(__dirname, "../build")));
 
 // Fallback route since using React Router
 app.get("*", (req, res) => {

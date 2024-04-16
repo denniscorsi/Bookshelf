@@ -29,25 +29,25 @@ const Book = (props) => {
     setNumNotes,
     numNotes,
     hasNewRating,
-    setHasNewRating
+    setHasNewRating,
+    googleId
   } = props;
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     // TODO: Does title need to be a useState or can it just be brought in as a normal prop?
     setTitle(props.title);
   }, []);
 
-  // Redirects to a full page for this book
-  const openBook = () => {
-    navigate("/book", { state: { bookId: title } }); //TODO: Pass book ID instead
-  };
+  // // Redirects to a full page for this book
+  // const openBook = () => {
+  //   navigate("/book", { state: { bookId: title } }); //TODO: Pass book ID instead
+  // };
 
   // when the actions menu is opened, this stores the title of the connect book into title and opens the actions dialog
   const bookActions = (e) => {
-    const selected =
-      e.target.parentElement.parentElement.firstChild.firstChild.innerText;
+    const selected = e.target.parentElement.parentElement.firstChild.firstChild.innerText;
     setTitle(selected);
     setActionsOpen(true);
   };
@@ -64,7 +64,7 @@ const Book = (props) => {
   const handleActionClick = (action, note) => {
     switch (action) {
       // TODO: consider notes. If want to keep this, will need to add a new attribute to User model that holds notes.
-      // While at it, will need to store ratings somehow too. And maybe reviews. 
+      // While at it, will need to store ratings somehow too. And maybe reviews.
       // So I need to figure out how to connect user specific data with a book
       // Maybe an object with the googleId as the key, and an object with user specific data as the value
       // User specific data includes note, rating, review
@@ -79,7 +79,7 @@ const Book = (props) => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ title, note })
+          body: JSON.stringify({ googleId, note })
         })
           .then((res) => res.json())
           .then((update) => {
@@ -89,7 +89,7 @@ const Book = (props) => {
             setNoteOpen(false);
           });
         break;
-      case "remove": // TODO: Change this not to remove book from database, but from user's shelf 
+      case "remove": // TODO: Change this not to remove book from database, but from user's shelf
         fetch("/books", {
           method: "DELETE",
           headers: {
@@ -145,9 +145,7 @@ const Book = (props) => {
   //will update rating for book in database
   const setRating = (event, rating) => {
     console.log(event.target);
-    const title =
-      event.target.parentElement.parentElement.parentElement.firstChild
-        .innerText;
+    const title = event.target.parentElement.parentElement.parentElement.firstChild.innerText;
     console.log(title, rating);
     fetch("/books/ratings", {
       method: "POST",
@@ -205,7 +203,7 @@ const Book = (props) => {
           </Typography>
           <img
             src={props.coverImg}
-            onClick={openBook}
+            // onClick={openBook}
             style={{
               boxShadow: "0px 30px 40px -25px rgba(0, 0, 0, 1)",
               border: "3px solid #1d1006",
@@ -213,12 +211,7 @@ const Book = (props) => {
               width: "auto"
             }}
           />
-          <Box
-            paddingY={2}
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-          >
+          <Box paddingY={2} display="flex" flexDirection="column" alignItems="center">
             <StyledRating
               icon={<MenuBookIcon />}
               value={props.rating}

@@ -59,9 +59,7 @@ authController.login = async (req, res, next) => {
   if (foundUser) {
     bcrypt.compare(password, foundUser.password, (err, result) => {
       if (!result) {
-        return res
-          .status(401)
-          .json({ ok: false, message: "Invalid credentials" });
+        return res.status(401).json({ ok: false, message: "Invalid credentials" });
       } else {
         console.log("found!");
         res.cookie("username", username);
@@ -97,12 +95,15 @@ authController.validateSession = async (req, res, next) => {
 
   const { username, ssid } = req.cookies;
 
+  //TODO: change the invalid response so that routes that are expecting a certain response can handle this
+  // perhaps ok: false
+
   if (!username || !ssid) return res.status(200).json(false);
 
   const session = await Session.findOne({ ssid });
   if (!session) return res.status(200).json(false);
 
-  res.locals.username = username
+  res.locals.username = username;
   return next();
 };
 

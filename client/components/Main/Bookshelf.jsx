@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Book from "../Book.jsx";
 import Grid from "@mui/material/Grid";
 
 const Bookshelf = ({
   activeShelf,
-  books,
   setHasDeletedBook,
   hasDeletedBook,
   setHasNewBook,
@@ -15,14 +14,15 @@ const Bookshelf = ({
   setHasNewRating
 }) => {
   // TODO: I should use a custom hook or useQuery to cache the books on the shelf so if I click back and forth between shelves it doesnt have to refetch books each time
-  const [books, setBooks] = useEffect([]);
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    fetch(`/books/${activeShelf}`)
+    console.log("Attempting to load this shelf:", activeShelf);
+    fetch(`/books/shelf/${activeShelf}`)
       .then((res) => res.json())
       .then((bookArr) => {
-        console.log("Got new books");
-        console.log(bookArr);
+        console.log("Got new books code:2");
+        console.log("Setting books useState to:", bookArr);
         setBooks(bookArr);
       })
       .catch();
@@ -38,7 +38,8 @@ const Bookshelf = ({
           return (
             <Grid item xs={4} key={Math.random()}>
               <Book
-                key={book.title + Math.random()}
+                key={book.googleId}
+                googleId={book.googleId}
                 title={book.title}
                 author={book.author}
                 description={book.description}
