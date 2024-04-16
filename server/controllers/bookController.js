@@ -112,9 +112,8 @@ bookController.loadBooks = (req, res, next) => {
   );
 };
 
-// TODO: param shelfName
-// Completely refactor to access an individual user's books
-// load all books from a given shelf mongoDB
+
+// load all books from a given shelf 
 bookController.loadBooksFromShelf = async (req, res, next) => {
   const { shelfName } = req.params;
   const { username } = res.locals;
@@ -123,14 +122,12 @@ bookController.loadBooksFromShelf = async (req, res, next) => {
   const user = await User.findOne({ username });
   const userShelves = user.shelves;
   const selectedShelf = userShelves.find((shelf) => shelf.name === shelfName);
-  const books = selectedShelf.books; // this is an array of googleIds
+  const googleIds = selectedShelf.books; // this is an array of googleIds
 
-  // TODO:
+ 
   // Then get each of those book objects from Book
-  // Can I build a filter than matches any of a list of googleIds?
 
-  Book.find({}).then(
-    // TODO: this filter
+  Book.find({ googleId: { $in: googleIds } }).then(
     (books) => {
       books.reverse();
       res.locals.books = books;
@@ -148,6 +145,7 @@ bookController.loadBooksFromShelf = async (req, res, next) => {
   );
 };
 
+// TODO: change this to delete from a user's books
 // deletes a book from the database
 bookController.deleteBook = (req, res, next) => {
   const { title } = req.body;
@@ -165,26 +163,17 @@ bookController.deleteBook = (req, res, next) => {
   return next();
 };
 
-// TODO: update to put in user's data
 // adds a note to a book
 bookController.addNote = (req, res, next) => {
   const { user } = res.locals;
-  const { title, note } = req.body;
+  const { googleId, note } = req.body; //TODO: update fetch request to give googleId instead of title
 
-  Book.findOneAndUpdate({ title }, { note }, { returnDocument: "after" }).then(
-    (updatedBook) => {
-      res.locals.updatedBook = updatedBook;
-      return next();
-    },
-    (err) => {
-      return next({
-        log: "Error updating note in database",
-        message: {
-          err: "updating a note in MongoDB failed in bookController.addNote"
-        }
-      });
-    }
-  );
+  const { userBookData } = user;
+  const thisBookData = userBookData[googleId];
+  thisBookData.note = note;
+
+  // Update database
+  User.findOneAndUpdate({ username: user.username }, { userBookData });
 };
 
 // TODO: update to put in user's data
