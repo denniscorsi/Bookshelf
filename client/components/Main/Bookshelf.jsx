@@ -29,7 +29,7 @@ const Bookshelf = ({
     return () => {
       console.log("Ran cleanup function");
     };
-  }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating]);
+  }, [hasNewBook, hasDeletedBook, numNotes, hasNewRating, activeShelf]);
 
   return (
     <>

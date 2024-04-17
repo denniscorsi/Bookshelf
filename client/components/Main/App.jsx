@@ -28,11 +28,6 @@ const App = () => {
       .then((session) => setIsLoggedIn(session));
   };
 
-  const openShelf = (shelfName) => {
-    setActiveShelf(shelfName);
-    navigate("/shelf");
-  };
-
   const fetchUserShelves = () => {
     fetch("/shelves")
       .then((res) => res.json())
