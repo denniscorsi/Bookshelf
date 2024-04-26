@@ -182,7 +182,6 @@ bookController.addNote = (req, res, next) => {
   next();
 };
 
-
 // TODO: then update total on book itself
 // updates rating on a book
 bookController.updateRating = (req, res, next) => {
@@ -196,10 +195,22 @@ bookController.updateRating = (req, res, next) => {
   // Update database
   User.findOneAndUpdate({ username: user.username }, { userBookData })
     .then((doc) => {
-      if (doc) console.log("found");
-      else console.log("no document");
+      if (doc) console.log("user found");
+      else console.log("no user document");
+
+      // update total rating on the book
+      Book.findOneAndUpdate(
+        { googleId },
+        { $inc: { numRatings: 1, totalRating: rating } },
+        { new: true }
+      ).then((doc) => {
+        if (doc) console.log({ doc });
+        else console.log("bood not found");
+      });
     })
     .catch((err) => console.log({ err }));
+
+  // TODO: If a user changes their rating, there needs to be different logic
 
   next();
 };
