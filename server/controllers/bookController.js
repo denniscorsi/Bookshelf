@@ -164,15 +164,26 @@ bookController.deleteBook = (req, res, next) => {
 
 // adds a note to a book
 bookController.addNote = (req, res, next) => {
+  console.log("In add note middleware");
   const { user } = res.locals;
-  const { googleId, note } = req.body; //TODO: update fetch request to give googleId instead of title
+  const { googleId, note } = req.body;
+  console.log(user.username);
+  console.log({ googleId, note });
 
   const { userBookData } = user;
   const thisBookData = userBookData[googleId];
   thisBookData.note = note;
+  console.log({ thisBookData });
 
   // Update database
-  User.findOneAndUpdate({ username: user.username }, { userBookData });
+  User.findOneAndUpdate({ username: user.username }, { userBookData })
+    .then((doc) => {
+      if (doc) console.log(doc);
+      else console.log("no document");
+    })
+    .catch((err) => console.log({ err }));
+
+  next();
 };
 
 // TODO: update to put in user's data
