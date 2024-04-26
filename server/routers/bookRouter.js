@@ -29,7 +29,7 @@ bookRouter.post("/gpt", gptController.findRec, gptController.unpackRec, (req, re
   res.status(200).json(data);
 });
 
-bookRouter.post("/ratings", bookController.updateRating, (req, res) => {
+bookRouter.post("/ratings", userController.loadUser, bookController.updateRating, (req, res) => {
   res.status(200).end();
 });
 

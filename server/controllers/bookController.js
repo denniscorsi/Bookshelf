@@ -164,21 +164,17 @@ bookController.deleteBook = (req, res, next) => {
 
 // adds a note to a book
 bookController.addNote = (req, res, next) => {
-  console.log("In add note middleware");
   const { user } = res.locals;
   const { googleId, note } = req.body;
-  console.log(user.username);
-  console.log({ googleId, note });
 
   const { userBookData } = user;
   const thisBookData = userBookData[googleId];
   thisBookData.note = note;
-  console.log({ thisBookData });
 
   // Update database
   User.findOneAndUpdate({ username: user.username }, { userBookData })
     .then((doc) => {
-      if (doc) console.log(doc);
+      if (doc) console.log("found");
       else console.log("no document");
     })
     .catch((err) => console.log({ err }));
@@ -186,25 +182,26 @@ bookController.addNote = (req, res, next) => {
   next();
 };
 
-// TODO: update to put in user's data
+
 // TODO: then update total on book itself
 // updates rating on a book
 bookController.updateRating = (req, res, next) => {
-  const { title, rating } = req.body;
-  Book.findOneAndUpdate({ title }, { rating }).then(
-    (result) => {
-      console.log("UPDATED RATING", result);
-      return next();
-    },
-    (err) => {
-      return next({
-        log: "Error updating rating in database",
-        message: {
-          err: "updating rating in MongoDB failed in bookController.updateRating"
-        }
-      });
-    }
-  );
+  const { user } = res.locals;
+  const { googleId, rating } = req.body;
+
+  const { userBookData } = user;
+  const thisBookData = userBookData[googleId];
+  thisBookData.rating = rating;
+
+  // Update database
+  User.findOneAndUpdate({ username: user.username }, { userBookData })
+    .then((doc) => {
+      if (doc) console.log("found");
+      else console.log("no document");
+    })
+    .catch((err) => console.log({ err }));
+
+  next();
 };
 
 // get the current NYT Bestseller list data

@@ -152,7 +152,7 @@ const Book = (props) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ title, rating })
+      body: JSON.stringify({ googleId, rating })
     }).then(setHasNewRating(!hasNewRating));
   };
 
